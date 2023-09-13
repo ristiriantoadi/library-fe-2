@@ -36,14 +36,14 @@ Coded by www.creative-tim.com
 */
 
 // Material Dashboard 2 React layouts
-import Dashboard from "layouts/dashboard";
-import Tables from "layouts/tables";
-import Billing from "layouts/billing";
-import RTL from "layouts/rtl";
-import Notifications from "layouts/notifications";
-import Profile from "layouts/profile";
 import SignIn from "layouts/authentication/sign-in";
 import SignUp from "layouts/authentication/sign-up";
+import Billing from "layouts/billing";
+import Dashboard from "layouts/dashboard";
+import Notifications from "layouts/notifications";
+import Profile from "layouts/profile";
+import RTL from "layouts/rtl";
+import Tables from "layouts/tables";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
@@ -102,7 +102,7 @@ const routes = [
     name: "Sign In",
     key: "sign-in",
     icon: <Icon fontSize="small">login</Icon>,
-    route: "/authentication/sign-in",
+    route: "/sign-in",
     component: <SignIn />,
   },
   {
