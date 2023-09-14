@@ -7,15 +7,14 @@ import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 
 import Card from "@mui/material/Card";
 import Grid from "@mui/material/Grid";
-
 // Material Dashboard 2 React components
-import Button from "@mui/material/Button";
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import DataTable from "examples/Tables/DataTable";
-
 // Material Dashboard 2 React example components
-
+import EditIcon from "@mui/icons-material/Edit";
+import InfoIcon from "@mui/icons-material/Info";
+import style from "./style.module.css";
 // Data
 
 // Data
@@ -30,16 +29,39 @@ function member() {
     { Header: "action", accessor: "action", align: "center" },
   ];
 
-  const getAction = () => {
-    return <Button variant="contained">Contained</Button>;
-  };
-
   const rows = [
     {
       name: "Ristirianto Adi",
       contact: "ristiriantoadi@gmail.com",
       status: "Aktif",
-      action: getAction(),
+      action: (
+        <div style={{ display: "flex", justifyContent: "space-evenly", width: "120px" }}>
+          <MDTypography
+            className={style.link}
+            verticalAlign="center"
+            component="a"
+            href="#"
+            variant="caption"
+            color="text"
+            fontWeight="medium"
+          >
+            <InfoIcon fontSize="inherit"></InfoIcon> Info
+          </MDTypography>
+          <MDTypography
+            className={style.link}
+            verticalAlign="center"
+            component="a"
+            href="#"
+            variant="caption"
+            color="text"
+            fontWeight="medium"
+            sx={{ "&:hover": { color: "white" } }}
+          >
+            <EditIcon></EditIcon>
+            Edit
+          </MDTypography>
+        </div>
+      ),
     },
   ];
 
@@ -61,7 +83,7 @@ function member() {
                 coloredShadow="info"
               >
                 <MDTypography variant="h6" color="white">
-                  Member
+                  Anggota
                 </MDTypography>
               </MDBox>
               <MDBox pt={3}>
