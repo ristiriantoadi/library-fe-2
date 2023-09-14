@@ -23,15 +23,17 @@ import style from "./style.module.css";
 
 function member() {
   const columns = [
-    { Header: "nama", accessor: "name", width: "45%", align: "left" },
+    { Header: "Nama", accessor: "name", align: "left" },
+    { Header: "ID Anggota", accessor: "memberId", align: "left" },
     { Header: "Informasi Kontak", accessor: "contact", align: "left" },
-    { Header: "status", accessor: "status", align: "center" },
-    { Header: "action", accessor: "action", align: "center" },
+    { Header: "Status", accessor: "status", align: "center" },
+    { Header: "Aksi", accessor: "action", align: "center" },
   ];
 
   const rows = [
     {
       name: "Ristirianto Adi",
+      memberId: "1221322",
       contact: "ristiriantoadi@gmail.com",
       status: "Aktif",
       action: (

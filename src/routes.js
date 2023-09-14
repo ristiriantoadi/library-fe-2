@@ -37,6 +37,7 @@ Coded by www.creative-tim.com
 
 // Material Dashboard 2 React layouts
 import Billing from "layouts/billing";
+import Configuration from "layouts/configuration";
 import Dashboard from "layouts/dashboard";
 import Member from "layouts/member";
 import Notifications from "layouts/notifications";
@@ -64,6 +65,22 @@ const routes = [
   },
   {
     type: "collapse",
+    name: "something",
+    key: "something",
+    icon: <Icon fontSize="small">person</Icon>,
+    route: "/others",
+    component: <Billing />,
+    collapse: [
+      {
+        route: "/others",
+        name: "other",
+        component: <Billing />,
+        key: "other",
+      },
+    ],
+  },
+  {
+    type: "collapse",
     name: "Buku",
     key: "book",
     icon: <Icon fontSize="small">book</Icon>,
@@ -85,6 +102,22 @@ const routes = [
     icon: <Icon fontSize="small">assignmentTurnedIn</Icon>,
     route: "/profile",
     component: <Profile />,
+  },
+  {
+    type: "collapse",
+    name: "Konfigurasi",
+    key: "configuration",
+    icon: <Icon fontSize="small">assignmentTurnedIn</Icon>,
+    route: "/configuration",
+    component: <Configuration />,
+  },
+  {
+    type: "collapse",
+    name: "Keluar",
+    key: "logout",
+    icon: <Icon fontSize="small">logout</Icon>,
+    route: "/logout",
+    // component: <Configuration />,
   },
 ];
 
