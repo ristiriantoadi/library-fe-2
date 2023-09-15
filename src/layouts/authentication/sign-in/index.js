@@ -39,6 +39,16 @@ function Basic() {
 
   const handleSetRememberMe = () => setRememberMe(!rememberMe);
 
+  const [noId, setNoId] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("submit");
+    console.log("noId", noId);
+    console.log("password", password);
+  };
+
   return (
     <BasicLayout image={bgImage}>
       <Card>
@@ -58,15 +68,27 @@ function Basic() {
           </MDTypography>
         </MDBox>
         <MDBox pt={4} pb={3} px={3}>
-          <MDBox component="form" role="form">
+          <MDBox component="form" onSubmit={handleSubmit} role="form">
             <MDBox mb={2}>
-              <MDInput type="email" label="Email" fullWidth />
+              <MDInput
+                type="text"
+                value={noId}
+                onChange={(e) => setNoId(e.target.value)}
+                label="No ID"
+                fullWidth
+              />
             </MDBox>
             <MDBox mb={2}>
-              <MDInput type="password" label="Password" fullWidth />
+              <MDInput
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                label="Password"
+                fullWidth
+              />
             </MDBox>
             <MDBox mt={4} mb={1}>
-              <MDButton variant="gradient" color="info" fullWidth>
+              <MDButton type="submit" variant="gradient" color="info" fullWidth>
                 Login
               </MDButton>
             </MDBox>
