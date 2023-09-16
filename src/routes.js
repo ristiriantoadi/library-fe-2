@@ -66,22 +66,6 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "something",
-    key: "something",
-    icon: <Icon fontSize="small">person</Icon>,
-    route: "/others",
-    component: <Billing />,
-    collapse: [
-      {
-        route: "/others",
-        name: "other",
-        component: <Billing />,
-        key: "other",
-      },
-    ],
-  },
-  {
-    type: "collapse",
     name: "Buku",
     key: "book",
     icon: <Icon fontSize="small">book</Icon>,

@@ -25,38 +25,6 @@ import ComplexStatisticsCard from "examples/Cards/StatisticsCards/ComplexStatist
 // Dashboard components
 
 function Dashboard() {
-  // return (
-  //   <DashboardLayout>
-  //     <div style={{ flex: "1", padding: "20px" }}>
-  //       <DashboardNavbar />
-  //       <MDBox py={3}>
-  //         <Grid justifyContent={"center"} container spacing={3}>
-  //           <Grid item xs={12} md={6} lg={3}>
-  //             <MDBox mb={1.5}>
-  //               <ComplexStatisticsCard icon="person" title="Anggota" count={200} />
-  //             </MDBox>
-  //           </Grid>
-  //           <Grid item xs={12} md={6} lg={3}>
-  //             <MDBox mb={1.5}>
-  //               <ComplexStatisticsCard color="dark" icon="book" title="Buku" count={281} />
-  //             </MDBox>
-  //           </Grid>
-  //           <Grid item xs={12} md={6} lg={3}>
-  //             <MDBox mb={1.5}>
-  //               <ComplexStatisticsCard
-  //                 color="primary"
-  //                 icon="person_add"
-  //                 title="Peminjaman"
-  //                 count="200"
-  //               />
-  //             </MDBox>
-  //           </Grid>
-  //         </Grid>
-  //       </MDBox>
-  //     </div>
-  //     <Footer />
-  //   </DashboardLayout>
-  // );
   return (
     <MDBox py={3}>
       <Grid justifyContent={"center"} container spacing={3}>
