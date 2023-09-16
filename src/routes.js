@@ -39,6 +39,7 @@ Coded by www.creative-tim.com
 import Billing from "layouts/billing";
 import Configuration from "layouts/configuration";
 import Dashboard from "layouts/dashboard";
+import Logout from "layouts/logout";
 import Member from "layouts/member";
 import Notifications from "layouts/notifications";
 import Profile from "layouts/profile";
@@ -117,7 +118,7 @@ const routes = [
     key: "logout",
     icon: <Icon fontSize="small">logout</Icon>,
     route: "/logout",
-    // component: <Configuration />,
+    component: <Logout />,
   },
 ];
 
