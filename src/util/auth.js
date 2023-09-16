@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = "http://localhost:8000/admin/account";
+const BASE_URL = "https://library-be-seven.vercel.app/admin/account";
 
 export const login = async (noId, password) => {
   const url = BASE_URL + "/login";
