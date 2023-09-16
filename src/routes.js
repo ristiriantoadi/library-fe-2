@@ -76,7 +76,7 @@ const routes = [
     type: "collapse",
     name: "Peminjaman",
     key: "checkout",
-    icon: <Icon fontSize="small">shoppingCartCheckout</Icon>,
+    icon: <Icon fontSize="small">bookmark</Icon>,
     route: "/notifications",
     component: <Notifications />,
   },
