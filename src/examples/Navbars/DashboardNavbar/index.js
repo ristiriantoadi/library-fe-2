@@ -46,12 +46,15 @@ import {
   useMaterialUIController,
 } from "context";
 
+import { getCurrentUser } from "util/auth";
+
 function DashboardNavbar({ absolute, light, isMini }) {
   const [navbarType, setNavbarType] = useState();
   const [controller, dispatch] = useMaterialUIController();
   const { miniSidenav, transparentNavbar, fixedNavbar, openConfigurator, darkMode } = controller;
   const [openMenu, setOpenMenu] = useState(false);
   const route = useLocation().pathname.split("/").slice(1);
+  const [name, setName] = useState();
 
   useEffect(() => {
     // Setting the navbar type
@@ -116,6 +119,13 @@ function DashboardNavbar({ absolute, light, isMini }) {
     },
   });
 
+  useEffect(() => {
+    getCurrentUser().then((data) => {
+      console.log("data", data);
+      setName(`${data.name} (${data.noId})`);
+    });
+  }, []);
+
   return (
     <AppBar
       position={absolute ? "absolute" : navbarType}
@@ -127,8 +137,8 @@ function DashboardNavbar({ absolute, light, isMini }) {
           <Breadcrumbs icon="home" title={route[route.length - 1]} route={route} light={light} />
         </MDBox>
         <MDBox color="inherit" mb={{ xs: 1, md: 0 }} sx={(theme) => navbarRow(theme, { isMini })}>
-          <MDTypography variant="button" textTransform="uppercase">
-            Admin
+          <MDTypography fontWeight="bold" variant="button" textTransform="uppercase">
+            {name}
           </MDTypography>
         </MDBox>
       </Toolbar>

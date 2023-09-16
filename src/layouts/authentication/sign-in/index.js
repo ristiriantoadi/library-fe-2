@@ -34,19 +34,20 @@ import BasicLayout from "layouts/authentication/components/BasicLayout";
 // Images
 import bgImage from "assets/images/bg-sign-in-basic.jpeg";
 
+import { useNavigate } from "react-router-dom";
+
+import { login } from "util/auth";
+
 function Basic() {
-  const [rememberMe, setRememberMe] = useState(false);
-
-  const handleSetRememberMe = () => setRememberMe(!rememberMe);
-
   const [noId, setNoId] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = (e) => {
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("submit");
-    console.log("noId", noId);
-    console.log("password", password);
+    await login(noId, password);
+    navigate("/dashboard");
   };
 
   return (

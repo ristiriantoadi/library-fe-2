@@ -45,6 +45,7 @@ import routes from "routes";
 
 // Material Dashboard 2 React contexts
 import { setMiniSidenav, setOpenConfigurator, useMaterialUIController } from "context";
+import PrivateRoutes from "util_components/PrivateRoute";
 
 // Images
 import brandDark from "assets/images/logo-ct-dark.png";
@@ -115,7 +116,11 @@ export default function App() {
       }
 
       if (route.route) {
-        return <Route exact path={route.route} element={route.component} key={route.key} />;
+        return (
+          <Route element={<PrivateRoutes />} key={route.key}>
+            <Route exact path={route.route} element={route.component} />;
+          </Route>
+        );
       }
 
       return null;
