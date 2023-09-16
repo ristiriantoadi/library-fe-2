@@ -50,11 +50,13 @@ function Basic() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    const isSuccess = await login(noId, password);
-    setLoading(false);
-    if (isSuccess == true) {
-      navigate("/dashboard");
+    try {
+      await login(noId, password);
+    } catch (error) {
+      setLoading(false);
+      return;
     }
+    navigate("/dashboard");
   };
 
   return (

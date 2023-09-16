@@ -16,11 +16,9 @@ export const login = async (noId, password) => {
     const response = await publicAxios.post(url, data, config);
     localStorage.setItem("token", response.data.access_token);
   } catch (error) {
-    console.log("error response", error.response);
     console.log("login fail");
-    return false;
+    return Promise.reject(error);
   }
-  return true;
 };
 
 export const getCurrentUser = async () => {
