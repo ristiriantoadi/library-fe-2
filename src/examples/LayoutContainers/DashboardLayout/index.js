@@ -25,7 +25,7 @@ import PropTypes from "prop-types";
 import MDBox from "components/MDBox";
 
 // Material Dashboard 2 React context
-import { useMaterialUIController, setLayout } from "context";
+import { setLayout, useMaterialUIController } from "context";
 
 function DashboardLayout({ children }) {
   const [controller, dispatch] = useMaterialUIController();
@@ -38,6 +38,7 @@ function DashboardLayout({ children }) {
 
   return (
     <MDBox
+      style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}
       sx={({ breakpoints, transitions, functions: { pxToRem } }) => ({
         p: 3,
         position: "relative",
