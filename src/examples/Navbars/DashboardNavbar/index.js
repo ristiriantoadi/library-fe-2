@@ -46,6 +46,7 @@ import {
   useMaterialUIController,
 } from "context";
 
+import Loader from "components/util/loader/loader";
 import { getCurrentUser } from "util/auth";
 
 function DashboardNavbar({ absolute, light, isMini }) {
@@ -55,6 +56,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
   const [openMenu, setOpenMenu] = useState(false);
   const route = useLocation().pathname.split("/").slice(1);
   const [name, setName] = useState();
+  const [loadingName, setLoadingName] = useState(true);
 
   useEffect(() => {
     // Setting the navbar type
@@ -120,8 +122,9 @@ function DashboardNavbar({ absolute, light, isMini }) {
   });
 
   useEffect(() => {
+    setLoadingName(true);
     getCurrentUser().then((data) => {
-      console.log("data", data);
+      setLoadingName(false);
       setName(`${data.name} (${data.noId})`);
     });
   }, []);
@@ -138,7 +141,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
         </MDBox>
         <MDBox color="inherit" mb={{ xs: 1, md: 0 }} sx={(theme) => navbarRow(theme, { isMini })}>
           <MDTypography fontWeight="bold" variant="button" textTransform="uppercase">
-            {name}
+            {loadingName == false ? name : <Loader></Loader>}
           </MDTypography>
         </MDBox>
       </Toolbar>

@@ -38,15 +38,20 @@ import { useNavigate } from "react-router-dom";
 
 import { login } from "util/auth";
 
+import Loader from "components/util/loader/loader";
+
 function Basic() {
   const [noId, setNoId] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     await login(noId, password);
+    setLoading(false);
     navigate("/dashboard");
   };
 
@@ -90,7 +95,7 @@ function Basic() {
             </MDBox>
             <MDBox mt={4} mb={1}>
               <MDButton type="submit" variant="gradient" color="info" fullWidth>
-                Login
+                {loading === true ? <Loader></Loader> : "Login"}
               </MDButton>
             </MDBox>
           </MDBox>
