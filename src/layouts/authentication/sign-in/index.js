@@ -36,7 +36,7 @@ import bgImage from "assets/images/bg-sign-in-basic.jpeg";
 
 import { useNavigate } from "react-router-dom";
 
-import { login } from "util/auth";
+import { login } from "util/admin-account";
 
 import Loader from "components/util/loader/loader";
 
@@ -50,9 +50,11 @@ function Basic() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    await login(noId, password);
+    const isSuccess = await login(noId, password);
     setLoading(false);
-    navigate("/dashboard");
+    if (isSuccess == true) {
+      navigate("/dashboard");
+    }
   };
 
   return (

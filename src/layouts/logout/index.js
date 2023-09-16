@@ -1,8 +1,9 @@
 import { Navigate } from "react-router-dom";
+import { logout } from "util/admin-account";
 
-function logout() {
-  localStorage.clear();
+function Logout() {
+  logout();
   return <Navigate to="/login" />;
 }
 
-export default logout;
+export default Logout;
