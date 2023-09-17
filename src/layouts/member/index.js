@@ -7,8 +7,10 @@ import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import DataTable from "examples/Tables/DataTable";
 // Material Dashboard 2 React example components
+import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
 import InfoIcon from "@mui/icons-material/Info";
+import MDButton from "components/MDButton";
 import style from "./style.module.css";
 // Data
 
@@ -80,6 +82,12 @@ function member() {
               <MDTypography variant="h6" color="white">
                 Anggota
               </MDTypography>
+            </MDBox>
+            <MDBox mx={2} mt={3}>
+              <MDButton color="info">
+                <AddIcon />
+                Tambah Anggota
+              </MDButton>
             </MDBox>
             <MDBox pt={3}>
               <DataTable

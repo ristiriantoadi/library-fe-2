@@ -1,5 +1,6 @@
 import axios from "axios";
 import { toast } from "react-toastify";
+import { getErrorMessage } from "./util";
 
 axios.defaults.baseURL = "http://localhost:8000";
 axios.headers = { Accept: "application/json" };
@@ -12,7 +13,7 @@ publicAxios.interceptors.response.use(
   },
   (error) => {
     // Handle response errors
-    toast.error(error.response.data.detail, {
+    toast.error(getErrorMessage(error), {
       position: "top-right",
       autoClose: 3000,
       hideProgressBar: false,
@@ -27,18 +28,12 @@ publicAxios.interceptors.response.use(
 );
 
 const privateAxios = axios.create({});
-privateAxios.interceptors.request.use(
-  (config) => {
-    // Modify the request configuration before it is sent
-    const token = localStorage.getItem("token");
-    config.headers.Authorization = `Bearer ${token}`;
-    return config;
-  },
-  (error) => {
-    // Handle request errors
-    return Promise.reject(error);
-  }
-);
+privateAxios.interceptors.request.use((config) => {
+  // Modify the request configuration before it is sent
+  const token = localStorage.getItem("token");
+  config.headers.Authorization = `Bearer ${token}`;
+  return config;
+});
 privateAxios.interceptors.response.use(
   (response) => {
     // Modify the response data or perform any other post-processing
@@ -46,7 +41,7 @@ privateAxios.interceptors.response.use(
   },
   (error) => {
     // Handle response errors
-    toast.error(error.response.data.detail, {
+    toast.error(getErrorMessage(error), {
       position: "top-right",
       autoClose: 3000,
       hideProgressBar: false,
