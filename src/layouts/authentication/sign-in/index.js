@@ -36,7 +36,7 @@ import bgImage from "assets/images/bg-sign-in-basic.jpeg";
 
 import { useNavigate } from "react-router-dom";
 
-import { login } from "util/admin-account";
+import { login } from "UtilRequests/admin-account";
 
 import Loader from "components/util/loader/loader";
 

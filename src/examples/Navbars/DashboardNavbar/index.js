@@ -47,7 +47,7 @@ import {
 } from "context";
 
 import Loader from "components/util/loader/loader";
-import { getCurrentUser } from "util/admin-account";
+import { getCurrentUser } from "UtilRequests/admin-account";
 
 function DashboardNavbar({ absolute, light, isMini }) {
   const [navbarType, setNavbarType] = useState();
@@ -129,9 +129,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
         setLoadingName(false);
         setName(`${data.name} (${data.noId})`);
       })
-      .catch((error) => {
-        if (error.response.status == 401) navigate("/login");
-      });
+      .catch((error) => {});
   }, []);
 
   return (

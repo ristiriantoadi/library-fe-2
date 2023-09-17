@@ -1,6 +1,7 @@
 import axios from "axios";
+import { toast } from "react-toastify";
 
-axios.defaults.baseURL = "https://library-be-seven.vercel.app";
+axios.defaults.baseURL = "http://localhost:8000";
 axios.headers = { Accept: "application/json" };
 
 const publicAxios = axios.create({});
@@ -25,6 +26,17 @@ privateAxios.interceptors.response.use(
   },
   (error) => {
     // Handle response errors
+    console.log("error", error);
+    toast.error(error.response.data.detail, {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+    });
     if (error.response.status == 401) window.location.href = "/login";
     return Promise.reject(error);
   }

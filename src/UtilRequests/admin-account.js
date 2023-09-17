@@ -22,8 +22,12 @@ export const login = async (noId, password) => {
 
 export const getCurrentUser = async () => {
   const url = BASE_ACCOUNT_URL + "/check_token";
-  const response = await privateAxios.get(url);
-  return response.data;
+  try {
+    const response = await privateAxios.get(url);
+    return response.data;
+  } catch (error) {
+    return Promise.reject(error);
+  }
 };
 
 export const logout = () => {

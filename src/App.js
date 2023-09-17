@@ -44,7 +44,7 @@ import routes from "routes";
 
 // Material Dashboard 2 React contexts
 import { setMiniSidenav, setOpenConfigurator, useMaterialUIController } from "context";
-import PrivateRoutes from "util_components/PrivateRoute";
+import PrivateRoutes from "UtilComponents/PrivateRoute";
 
 // Images
 import brandDark from "assets/images/logo-ct-dark.png";

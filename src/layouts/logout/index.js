@@ -1,5 +1,5 @@
 import { Navigate } from "react-router-dom";
-import { logout } from "util/admin-account";
+import { logout } from "UtilRequests/admin-account";
 
 function Logout() {
   logout();
