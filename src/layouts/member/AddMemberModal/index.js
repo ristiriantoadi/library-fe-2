@@ -13,8 +13,12 @@ import PropTypes from "prop-types";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 
 import { styled } from "@mui/material/styles";
+import { useEffect, useState } from "react";
 
 function AddMemberModal(props) {
+  const [profileImage, setProfileImage] = useState();
+  const [preview, setPreview] = useState(undefined);
+
   AddMemberModal.propTypes = {
     open: PropTypes.bool.isRequired, // Example: boolean prop
     setOpen: PropTypes.func.isRequired, // Example: function prop
@@ -31,6 +35,24 @@ function AddMemberModal(props) {
     whiteSpace: "nowrap",
     width: 1,
   });
+
+  const onSelectFile = (e) => {
+    console.log("files", e.target.files);
+    setProfileImage(e.target.files[0]);
+  };
+
+  useEffect(() => {
+    if (!profileImage) {
+      setPreview(undefined);
+      return;
+    }
+
+    const objectUrl = URL.createObjectURL(profileImage);
+    setPreview(objectUrl);
+
+    // free memory when ever this component is unmounted
+    return () => URL.revokeObjectURL(objectUrl);
+  }, [profileImage]);
 
   return (
     <Modal
@@ -109,13 +131,13 @@ function AddMemberModal(props) {
             <Grid item xs={12} md={6}>
               <Grid container flexDirection="column" alignItems="center">
                 <Grid item style={{ flex: "1" }}>
-                  <img style={{ margin: "auto" }} height="333px" width="250px"></img>
+                  <img src={preview} style={{ margin: "auto" }} height="333px" width="250px"></img>
                 </Grid>
                 <Grid item>
                   <MDBox mb={3}>
                     <MDButton component="label" variant="contained" startIcon={<CloudUploadIcon />}>
                       Upload Foto Profil
-                      <VisuallyHiddenInput type="file" />
+                      <VisuallyHiddenInput type="file" onChange={onSelectFile} />
                     </MDButton>
                   </MDBox>
                 </Grid>
