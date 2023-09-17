@@ -40,9 +40,8 @@ function member() {
         params: { size: 10, page: 0, sort: "createTime", dir: -1 },
       })
       .then((response) => {
-        console.log("response", response);
+        let data = [];
         response.data.content.forEach((element) => {
-          let data = [];
           data.push({
             name: element.name,
             memberId: element.noId,
@@ -78,8 +77,8 @@ function member() {
               </div>
             ),
           });
-          setRows(data);
         });
+        setRows(data);
       })
       .catch((error) => {
         console.log(error);
