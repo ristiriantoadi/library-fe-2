@@ -40,8 +40,6 @@ import { login } from "UtilRequests/admin-account";
 
 import Loader from "components/util/loader/loader";
 
-import { toast } from "react-toastify";
-
 function Basic() {
   const [noId, setNoId] = useState("");
   const [password, setPassword] = useState("");
@@ -55,17 +53,6 @@ function Basic() {
     try {
       await login(noId, password);
     } catch (error) {
-      console.log("error", error);
-      toast.error(error.response.data.detail, {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-      });
       setLoading(false);
       return;
     }

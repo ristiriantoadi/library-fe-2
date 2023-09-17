@@ -5,6 +5,26 @@ axios.defaults.baseURL = "http://localhost:8000";
 axios.headers = { Accept: "application/json" };
 
 const publicAxios = axios.create({});
+publicAxios.interceptors.response.use(
+  (response) => {
+    // Modify the response data or perform any other post-processing
+    return response;
+  },
+  (error) => {
+    // Handle response errors
+    toast.error(error.response.data.detail, {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+    });
+    return Promise.reject(error);
+  }
+);
 
 const privateAxios = axios.create({});
 privateAxios.interceptors.request.use(
@@ -26,7 +46,6 @@ privateAxios.interceptors.response.use(
   },
   (error) => {
     // Handle response errors
-    console.log("error", error);
     toast.error(error.response.data.detail, {
       position: "top-right",
       autoClose: 3000,
