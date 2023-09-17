@@ -66,7 +66,7 @@ function AddMemberModal(props) {
             Tambah Anggota
           </MDTypography>
         </MDBox>
-        <MDBox mx={2}>
+        <MDBox mx={5}>
           <Grid container spacing={2}>
             <Grid item xs={12} md={6}>
               <MDBox mb={3}>
@@ -107,8 +107,10 @@ function AddMemberModal(props) {
               </MDBox>
             </Grid>
             <Grid item xs={12} md={6}>
-              <Grid container flexDirection="column">
-                <Grid item style={{ flex: "1", padding: "172px" }}></Grid>
+              <Grid container flexDirection="column" alignItems="center">
+                <Grid item style={{ flex: "1" }}>
+                  <img style={{ margin: "auto" }} height="333px" width="250px"></img>
+                </Grid>
                 <Grid item>
                   <MDBox mb={3}>
                     <MDButton component="label" variant="contained" startIcon={<CloudUploadIcon />}>
@@ -117,17 +119,20 @@ function AddMemberModal(props) {
                     </MDButton>
                   </MDBox>
                 </Grid>
-                <Grid item>
-                  <MDBox mb={3}>
-                    <MDTypography mb={1} variant="body2" fontWeight="bold">
-                      Nomor Telepon
-                    </MDTypography>
-                    <MDInput type="tel" required fullWidth />
-                  </MDBox>
-                </Grid>
+              </Grid>
+              <Grid item>
+                <MDBox mb={3}>
+                  <MDTypography mb={1} variant="body2" fontWeight="bold">
+                    Nomor Telepon
+                  </MDTypography>
+                  <MDInput type="tel" required fullWidth />
+                </MDBox>
               </Grid>
             </Grid>
           </Grid>
+        </MDBox>
+        <MDBox style={{ display: "flex", justifyContent: "flex-end" }} mx={5} mb={3}>
+          <MDButton color="info">Submit</MDButton>
         </MDBox>
       </MDBox>
     </Modal>
