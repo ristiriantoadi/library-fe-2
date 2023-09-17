@@ -27,7 +27,6 @@ import { ThemeProvider } from "@mui/material/styles";
 import MDBox from "components/MDBox";
 
 // Material Dashboard 2 React example components
-import Configurator from "examples/Configurator";
 import Sidenav from "examples/Sidenav";
 
 // Material Dashboard 2 React themes
@@ -167,7 +166,6 @@ export default function App() {
           {configsButton} */}
         </>
       )}
-      {layout === "vr" && <Configurator />}
       <Routes>
         {getRoutes(routes)}
         <Route path="/login" element={<SignIn></SignIn>} />

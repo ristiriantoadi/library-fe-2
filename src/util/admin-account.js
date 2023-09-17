@@ -16,7 +16,6 @@ export const login = async (noId, password) => {
     const response = await publicAxios.post(url, data, config);
     localStorage.setItem("token", response.data.access_token);
   } catch (error) {
-    console.log("login fail");
     return Promise.reject(error);
   }
 };
