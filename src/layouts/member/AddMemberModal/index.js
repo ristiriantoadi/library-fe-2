@@ -13,11 +13,12 @@ import PropTypes from "prop-types";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 
 import { styled } from "@mui/material/styles";
+import peopleImage from "assets/images/people-image.jpg";
 import { useEffect, useState } from "react";
 
 function AddMemberModal(props) {
-  const [profileImage, setProfileImage] = useState();
-  const [preview, setPreview] = useState(undefined);
+  const [profileImage, setProfileImage] = useState(undefined);
+  const [preview, setPreview] = useState(peopleImage);
 
   AddMemberModal.propTypes = {
     open: PropTypes.bool.isRequired, // Example: boolean prop
@@ -43,7 +44,7 @@ function AddMemberModal(props) {
 
   useEffect(() => {
     if (!profileImage) {
-      setPreview(undefined);
+      setPreview(peopleImage);
       return;
     }
 
