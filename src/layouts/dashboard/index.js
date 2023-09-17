@@ -21,26 +21,57 @@ import MDBox from "components/MDBox";
 
 // Material Dashboard 2 React example components
 import ComplexStatisticsCard from "examples/Cards/StatisticsCards/ComplexStatisticsCard";
+import { useEffect, useState } from "react";
+import { privateAxios } from "UtilRequests/util-axios";
 
 // Dashboard components
 
 function Dashboard() {
+  const [bookCount, setBookCount] = useState(0);
+  const [memberCount, setMemberCount] = useState(0);
+  const [borrowingCount, setBorrowingCount] = useState(0);
+
+  useEffect(() => {
+    const bookCountRequest = privateAxios.get("/admin/book/total_count");
+    const memberCountRequest = privateAxios.get("/admin/member/total_count");
+    const borrowingCountRequest = privateAxios.get("/admin/borrowing/total_count");
+    Promise.all([bookCountRequest, memberCountRequest, borrowingCountRequest])
+      .then((responses) => {
+        const bookCountResponse = responses[0];
+        const memberCountResponse = responses[1];
+        const borrowingCountResponse = responses[2];
+
+        setBookCount(bookCountResponse.data.count);
+        setMemberCount(memberCountResponse.data.count);
+        setBorrowingCount(borrowingCountResponse.data.count);
+      })
+      .catch((error) => {
+        // Handle errors here
+        console.error(error);
+      });
+  }, []);
+
   return (
     <MDBox py={3}>
       <Grid justifyContent={"center"} container spacing={3}>
         <Grid item xs={12} md={6} lg={3}>
           <MDBox mb={1.5}>
-            <ComplexStatisticsCard icon="person" title="Anggota" count={200} />
+            <ComplexStatisticsCard icon="person" title="Anggota" count={memberCount} />
           </MDBox>
         </Grid>
         <Grid item xs={12} md={6} lg={3}>
           <MDBox mb={1.5}>
-            <ComplexStatisticsCard color="dark" icon="book" title="Buku" count={281} />
+            <ComplexStatisticsCard color="dark" icon="book" title="Buku" count={bookCount} />
           </MDBox>
         </Grid>
         <Grid item xs={12} md={6} lg={3}>
           <MDBox mb={1.5}>
-            <ComplexStatisticsCard color="primary" icon="bookmark" title="Peminjaman" count="200" />
+            <ComplexStatisticsCard
+              color="primary"
+              icon="bookmark"
+              title="Peminjaman"
+              count={borrowingCount}
+            />
           </MDBox>
         </Grid>
       </Grid>
