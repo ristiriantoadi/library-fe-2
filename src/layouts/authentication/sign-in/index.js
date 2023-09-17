@@ -82,6 +82,7 @@ function Basic() {
             <MDBox mb={2}>
               <MDInput
                 type="text"
+                required
                 value={noId}
                 onChange={(e) => setNoId(e.target.value)}
                 label="No ID"
@@ -90,6 +91,7 @@ function Basic() {
             </MDBox>
             <MDBox mb={2}>
               <MDInput
+                required
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
