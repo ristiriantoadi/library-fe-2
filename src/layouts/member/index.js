@@ -11,7 +11,8 @@ import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
 import InfoIcon from "@mui/icons-material/Info";
 import MDButton from "components/MDButton";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { privateAxios } from "UtilRequests/util-axios";
 import AddMemberModal from "./AddMemberModal";
 import style from "./style.module.css";
 // Data
@@ -21,51 +22,70 @@ import style from "./style.module.css";
 // Dashboard components
 
 function member() {
+  const [openAddMember, setOpenAddMember] = useState(false);
+  const [rows, setRows] = useState([]);
+
   const columns = [
     { Header: "Nama", accessor: "name", align: "left" },
     { Header: "ID Anggota", accessor: "memberId", align: "left" },
-    { Header: "Informasi Kontak", accessor: "contact", align: "left" },
+    { Header: "Email", accessor: "email", align: "left" },
+    { Header: "Nomor Telepon", accessor: "phoneNumber", align: "left" },
     { Header: "Status", accessor: "status", align: "center" },
     { Header: "Aksi", accessor: "action", align: "center" },
   ];
-  const rows = [
-    {
-      name: "Ristirianto Adi",
-      memberId: "1221322",
-      contact: "ristiriantoadi@gmail.com",
-      status: "Aktif",
-      action: (
-        <div style={{ display: "flex", justifyContent: "space-evenly", width: "120px" }}>
-          <MDTypography
-            className={style.link}
-            verticalAlign="center"
-            component="a"
-            href="#"
-            variant="caption"
-            color="text"
-            fontWeight="medium"
-          >
-            <InfoIcon fontSize="inherit"></InfoIcon> Info
-          </MDTypography>
-          <MDTypography
-            className={style.link}
-            verticalAlign="center"
-            component="a"
-            href="#"
-            variant="caption"
-            color="text"
-            fontWeight="medium"
-            sx={{ "&:hover": { color: "white" } }}
-          >
-            <EditIcon></EditIcon>
-            Edit
-          </MDTypography>
-        </div>
-      ),
-    },
-  ];
 
-  const [openAddMember, setOpenAddMember] = useState(false);
+  useEffect(() => {
+    privateAxios
+      .get("/admin/member", {
+        params: { size: 10, page: 0, sort: "createTime", dir: -1 },
+      })
+      .then((response) => {
+        console.log("response", response);
+        response.data.content.forEach((element) => {
+          let data = [];
+          data.push({
+            name: element.name,
+            memberId: element.noId,
+            email: element.email,
+            phoneNumber: element.phoneNumber,
+            status: element.status,
+            action: (
+              <div style={{ display: "flex", justifyContent: "space-evenly", width: "120px" }}>
+                <MDTypography
+                  className={style.link}
+                  verticalAlign="center"
+                  component="a"
+                  href="#"
+                  variant="caption"
+                  color="text"
+                  fontWeight="medium"
+                >
+                  <InfoIcon fontSize="inherit"></InfoIcon> Info
+                </MDTypography>
+                <MDTypography
+                  className={style.link}
+                  verticalAlign="center"
+                  component="a"
+                  href="#"
+                  variant="caption"
+                  color="text"
+                  fontWeight="medium"
+                  sx={{ "&:hover": { color: "white" } }}
+                >
+                  <EditIcon></EditIcon>
+                  Edit
+                </MDTypography>
+              </div>
+            ),
+          });
+          setRows(data);
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
   return (
     <MDBox pt={6} pb={3}>
       <Grid container spacing={6}>
