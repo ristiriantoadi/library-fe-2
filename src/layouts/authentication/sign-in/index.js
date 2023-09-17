@@ -38,7 +38,7 @@ import { useNavigate } from "react-router-dom";
 
 import { login } from "UtilRequests/admin-account";
 
-import Loader from "components/util/loader/loader";
+import Loader from "components/Util/Loader/loader";
 
 function Basic() {
   const [noId, setNoId] = useState("");

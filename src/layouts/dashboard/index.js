@@ -18,6 +18,7 @@ import Grid from "@mui/material/Grid";
 
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
+import BigLoader from "components/Util/BigLoader/BigLoader";
 
 // Material Dashboard 2 React example components
 import ComplexStatisticsCard from "examples/Cards/StatisticsCards/ComplexStatisticsCard";
@@ -30,11 +31,13 @@ function Dashboard() {
   const [bookCount, setBookCount] = useState(0);
   const [memberCount, setMemberCount] = useState(0);
   const [borrowingCount, setBorrowingCount] = useState(0);
+  const [loadingCount, setLoadingCount] = useState(false);
 
   useEffect(() => {
     const bookCountRequest = privateAxios.get("/admin/book/total_count");
     const memberCountRequest = privateAxios.get("/admin/member/total_count");
     const borrowingCountRequest = privateAxios.get("/admin/borrowing/total_count");
+    setLoadingCount(true);
     Promise.all([bookCountRequest, memberCountRequest, borrowingCountRequest])
       .then((responses) => {
         const bookCountResponse = responses[0];
@@ -44,6 +47,7 @@ function Dashboard() {
         setBookCount(bookCountResponse.data.count);
         setMemberCount(memberCountResponse.data.count);
         setBorrowingCount(borrowingCountResponse.data.count);
+        setLoadingCount(false);
       })
       .catch((error) => {
         // Handle errors here
@@ -53,7 +57,8 @@ function Dashboard() {
 
   return (
     <MDBox py={3}>
-      <Grid justifyContent={"center"} container spacing={3}>
+      <Grid style={{ position: "relative" }} justifyContent={"center"} container spacing={3}>
+        {loadingCount == true && <BigLoader></BigLoader>}
         <Grid item xs={12} md={6} lg={3}>
           <MDBox mb={1.5}>
             <ComplexStatisticsCard icon="person" title="Anggota" count={memberCount} />

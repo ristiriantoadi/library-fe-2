@@ -46,7 +46,7 @@ import {
   useMaterialUIController,
 } from "context";
 
-import Loader from "components/util/loader/loader";
+import Loader from "components/Util/Loader/loader";
 import { getCurrentUser } from "UtilRequests/admin-account";
 
 function DashboardNavbar({ absolute, light, isMini }) {
