@@ -11,6 +11,8 @@ import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
 import InfoIcon from "@mui/icons-material/Info";
 import MDButton from "components/MDButton";
+import { useState } from "react";
+import AddMemberModal from "./AddMemberModal";
 import style from "./style.module.css";
 // Data
 
@@ -26,7 +28,6 @@ function member() {
     { Header: "Status", accessor: "status", align: "center" },
     { Header: "Aksi", accessor: "action", align: "center" },
   ];
-
   const rows = [
     {
       name: "Ristirianto Adi",
@@ -64,6 +65,7 @@ function member() {
     },
   ];
 
+  const [openAddMember, setOpenAddMember] = useState(false);
   return (
     <MDBox pt={6} pb={3}>
       <Grid container spacing={6}>
@@ -84,10 +86,11 @@ function member() {
               </MDTypography>
             </MDBox>
             <MDBox mx={2} mt={3}>
-              <MDButton color="info">
+              <MDButton onClick={() => setOpenAddMember(true)} color="info">
                 <AddIcon />
                 Tambah Anggota
               </MDButton>
+              <AddMemberModal open={openAddMember} setOpen={setOpenAddMember}></AddMemberModal>
             </MDBox>
             <MDBox pt={3}>
               <DataTable
