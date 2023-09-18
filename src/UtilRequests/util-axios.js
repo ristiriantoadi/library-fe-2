@@ -41,6 +41,7 @@ privateAxios.interceptors.response.use(
   },
   (error) => {
     // Handle response errors
+    console.log("private error", error);
     toast.error(getErrorMessage(error), {
       position: "top-right",
       autoClose: 3000,
