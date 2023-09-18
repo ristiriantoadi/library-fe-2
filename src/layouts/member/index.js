@@ -28,6 +28,8 @@ function member() {
   const [rows, setRows] = useState([]);
   const [openInfoMember, setOpenInfoMember] = useState(false);
   const [openEditMember, setOpenEditMember] = useState(false);
+  const [members, setMembers] = useState([{}]);
+  const [index, setIndex] = useState(0);
 
   const columns = [
     { Header: "Nama", accessor: "name", align: "left" },
@@ -45,7 +47,8 @@ function member() {
       })
       .then((response) => {
         let data = [];
-        response.data.content.forEach((element) => {
+        setMembers(response.data.content);
+        response.data.content.forEach((element, index) => {
           data.push({
             name: element.name,
             memberId: element.noId,
@@ -56,13 +59,15 @@ function member() {
               <div style={{ display: "flex", justifyContent: "space-evenly", width: "120px" }}>
                 <MDTypography
                   className={style.link}
-                  verticalAlign="center"
                   component="a"
                   href="#"
                   variant="caption"
                   color="text"
                   fontWeight="medium"
-                  onClick={() => setOpenInfoMember(true)}
+                  onClick={() => {
+                    setOpenInfoMember(true);
+                    setIndex(index);
+                  }}
                 >
                   <InfoIcon fontSize="inherit"></InfoIcon> Info
                 </MDTypography>
@@ -93,7 +98,11 @@ function member() {
   return (
     <MDBox pt={6} pb={3}>
       <AddMemberModal open={openAddMember} setOpen={setOpenAddMember}></AddMemberModal>
-      <InfoModal open={openInfoMember} setOpen={setOpenInfoMember}></InfoModal>
+      <InfoModal
+        open={openInfoMember}
+        member={members[index]}
+        setOpen={setOpenInfoMember}
+      ></InfoModal>
       <EditMemberModal open={openEditMember} setOpen={setOpenEditMember}></EditMemberModal>
       <Grid container spacing={6}>
         <Grid item xs={12}>
