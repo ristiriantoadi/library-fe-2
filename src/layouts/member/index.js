@@ -40,14 +40,14 @@ function member() {
     { Header: "Aksi", accessor: "action", align: "center" },
   ];
 
-  useEffect(() => {
+  const fetchData = () => {
     privateAxios
       .get("/admin/member", {
         params: { size: 10, page: 0, sort: "createTime", dir: -1 },
       })
       .then((response) => {
-        let data = [];
         setMembers(response.data.content);
+        let data = [];
         response.data.content.forEach((element, index) => {
           data.push({
             name: element.name,
@@ -93,11 +93,23 @@ function member() {
       .catch((error) => {
         console.log(error);
       });
+  };
+
+  useEffect(() => {
+    fetchData();
   }, []);
+
+  const postSuccess = () => {
+    fetchData();
+  };
 
   return (
     <MDBox pt={6} pb={3}>
-      <AddMemberModal open={openAddMember} setOpen={setOpenAddMember}></AddMemberModal>
+      <AddMemberModal
+        open={openAddMember}
+        setOpen={setOpenAddMember}
+        postSuccess={postSuccess}
+      ></AddMemberModal>
       <InfoModal
         open={openInfoMember}
         member={members[index]}

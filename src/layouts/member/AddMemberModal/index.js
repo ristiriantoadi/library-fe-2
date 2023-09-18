@@ -29,8 +29,9 @@ function AddMemberModal(props) {
   const [phoneNumber, setPhoneNumber] = useState();
 
   AddMemberModal.propTypes = {
-    open: PropTypes.bool.isRequired, // Example: boolean prop
-    setOpen: PropTypes.func.isRequired, // Example: function prop
+    open: PropTypes.bool.isRequired,
+    setOpen: PropTypes.func.isRequired,
+    postSuccess: PropTypes.func.isRequired,
   };
 
   const VisuallyHiddenInput = styled("input")({
@@ -104,6 +105,7 @@ function AddMemberModal(props) {
       theme: "colored",
     });
     resetInput();
+    props.postSuccess();
   };
 
   return (
