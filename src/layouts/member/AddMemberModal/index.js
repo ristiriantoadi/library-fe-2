@@ -15,6 +15,7 @@ import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { styled } from "@mui/material/styles";
 import peopleImage from "assets/images/people-image.jpg";
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import { privateAxios } from "UtilRequests/util-axios";
 
 function AddMemberModal(props) {
@@ -61,6 +62,16 @@ function AddMemberModal(props) {
     return () => URL.revokeObjectURL(objectUrl);
   }, [profilePicture]);
 
+  const resetInput = () => {
+    setName();
+    setNoId();
+    setDate();
+    setGender();
+    setEmail();
+    setPhoneNumber();
+    setProfilePicture();
+  };
+
   const addMember = async () => {
     const formData = new FormData();
     formData.append("name", name);
@@ -81,6 +92,18 @@ function AddMemberModal(props) {
     } catch (error) {
       console.log("error", error);
     }
+    props.setOpen(false);
+    toast.success("Berhasil Menambahkan Data Anggota", {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+    });
+    resetInput();
   };
 
   return (
