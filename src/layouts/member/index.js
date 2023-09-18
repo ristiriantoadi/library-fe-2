@@ -14,6 +14,7 @@ import MDButton from "components/MDButton";
 import { useEffect, useState } from "react";
 import { privateAxios } from "UtilRequests/util-axios";
 import AddMemberModal from "./AddMemberModal";
+import EditMemberModal from "./EditMemberModal";
 import InfoModal from "./InfoModal";
 import style from "./style.module.css";
 // Data
@@ -25,7 +26,8 @@ import style from "./style.module.css";
 function member() {
   const [openAddMember, setOpenAddMember] = useState(false);
   const [rows, setRows] = useState([]);
-  const [openInfo, setOpenInfo] = useState(false);
+  const [openInfoMember, setOpenInfoMember] = useState(false);
+  const [openEditMember, setOpenEditMember] = useState(false);
 
   const columns = [
     { Header: "Nama", accessor: "name", align: "left" },
@@ -60,7 +62,7 @@ function member() {
                   variant="caption"
                   color="text"
                   fontWeight="medium"
-                  onClick={() => setOpenInfo(true)}
+                  onClick={() => setOpenInfoMember(true)}
                 >
                   <InfoIcon fontSize="inherit"></InfoIcon> Info
                 </MDTypography>
@@ -72,7 +74,7 @@ function member() {
                   variant="caption"
                   color="text"
                   fontWeight="medium"
-                  sx={{ "&:hover": { color: "white" } }}
+                  onClick={() => setOpenEditMember(true)}
                 >
                   <EditIcon></EditIcon>
                   Edit
@@ -91,7 +93,8 @@ function member() {
   return (
     <MDBox pt={6} pb={3}>
       <AddMemberModal open={openAddMember} setOpen={setOpenAddMember}></AddMemberModal>
-      <InfoModal open={openInfo} setOpen={setOpenInfo}></InfoModal>
+      <InfoModal open={openInfoMember} setOpen={setOpenInfoMember}></InfoModal>
+      <EditMemberModal open={openEditMember} setOpen={setOpenEditMember}></EditMemberModal>
       <Grid container spacing={6}>
         <Grid item xs={12}>
           <Card>
