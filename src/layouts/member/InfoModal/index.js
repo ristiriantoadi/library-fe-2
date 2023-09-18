@@ -4,12 +4,15 @@ import peopleImage from "assets/images/people-image.jpg";
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import PropTypes from "prop-types";
+import { useState } from "react";
+import BasicTabs from "./BasicTabs";
 
 function InfoModal(props) {
   InfoModal.propTypes = {
     open: PropTypes.bool.isRequired, // Example: boolean prop
     setOpen: PropTypes.func.isRequired, // Example: function prop
   };
+  const [value, setValue] = useState(0);
 
   return (
     <Modal
@@ -25,7 +28,7 @@ function InfoModal(props) {
           top: "50%",
           left: "50%",
           transform: "translate(-50%, -50%)",
-          width: "60%",
+          width: "70%",
           p: 4,
         }}
       >
@@ -85,10 +88,11 @@ function InfoModal(props) {
               <MDTypography variant="body2">08193311321</MDTypography>
             </MDBox>
           </Grid>
-          <Grid item xs={12} md={4} pb={2}>
-            <img src={peopleImage} width={"200px"} height={"241px"}></img>
+          <Grid item xs={12} sm={12} md={12} lg={4} pb={2}>
+            <img src={peopleImage} height={"241px"}></img>
           </Grid>
         </Grid>
+        <BasicTabs></BasicTabs>
       </MDBox>
     </Modal>
   );
