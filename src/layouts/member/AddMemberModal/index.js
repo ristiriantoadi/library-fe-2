@@ -113,6 +113,25 @@ function AddMemberModal(props) {
     props.postSuccess();
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (profilePicture == undefined) {
+      toast.error("Harap mengunggah foto profil", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+      return;
+    }
+
+    addMember();
+  };
+
   return (
     <Modal
       open={props.open}
@@ -120,151 +139,162 @@ function AddMemberModal(props) {
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
-      <MDBox
-        bgColor="white"
-        // py={3
-        style={{
-          position: "absolute",
-          top: "50%",
-          left: "50%",
-          transform: "translate(-50%, -50%)",
-          width: "60%",
-          p: 4,
-        }}
-      >
+      <form onSubmit={handleSubmit}>
         <MDBox
-          mx={2}
-          py={3}
-          px={2}
-          mt={-3}
-          mb={3}
-          variant="gradient"
-          bgColor="info"
-          borderRadius="lg"
-          coloredShadow="info"
+          bgColor="white"
+          // py={3
+          style={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: "60%",
+            p: 4,
+          }}
         >
-          <MDTypography id="modal-modal-title" variant="h6" color="white">
-            Tambah Anggota
-          </MDTypography>
-        </MDBox>
-        <MDBox mx={5}>
-          <Grid container spacing={2}>
-            <Grid item xs={12} md={6}>
-              <MDBox mb={3}>
-                <MDTypography mb={1} variant="body2" fontWeight="bold">
-                  Nama
-                </MDTypography>
-                <MDInput
-                  type="text"
-                  value={name}
-                  onChange={(e) => {
-                    setName(e.target.value);
-                  }}
-                  required
-                  fullWidth
-                />
-              </MDBox>
-              <MDBox mb={3}>
-                <MDTypography mb={1} variant="body2" fontWeight="bold">
-                  ID Anggota
-                </MDTypography>
-                <MDInput
-                  type="text"
-                  value={noId}
-                  onChange={(e) => {
-                    setNoId(e.target.value);
-                  }}
-                  required
-                  fullWidth
-                />
-              </MDBox>
-              <MDBox mb={3}>
-                <MDTypography mb={1} variant="body2" fontWeight="bold">
-                  Tanggal Lahir
-                </MDTypography>
-                <MDInput
-                  value={date}
-                  onChange={(e) => {
-                    setDate(e.target.value);
-                  }}
-                  type="date"
-                  required
-                  fullWidth
-                />
-              </MDBox>
-              <MDBox mb={3}>
-                <MDTypography mb={1} variant="body2" fontWeight="bold">
-                  Jenis Kelamin
-                </MDTypography>
-                <FormControl fullWidth>
-                  <InputLabel id="demo-simple-select-label">Gender</InputLabel>
-                  <Select
-                    value={gender}
-                    onChange={(e) => {
-                      setGender(e.target.value);
-                    }}
-                    style={{ height: "44px" }}
-                    label="gender"
-                  >
-                    <MenuItem value="MALE">Laki-laki</MenuItem>
-                    <MenuItem value="FEMALE">Perempuan</MenuItem>
-                  </Select>
-                </FormControl>
-              </MDBox>
-              <MDBox mb={3}>
-                <MDTypography mb={1} variant="body2" fontWeight="bold">
-                  Email
-                </MDTypography>
-                <MDInput
-                  value={email}
-                  onChange={(e) => {
-                    setEmail(e.target.value);
-                  }}
-                  type="email"
-                  required
-                  fullWidth
-                />
-              </MDBox>
-            </Grid>
-            <Grid item xs={12} md={6}>
-              <Grid container flexDirection="column" alignItems="center">
-                <Grid item style={{ flex: "1" }}>
-                  <img src={preview} style={{ margin: "auto" }} height="333px" width="250px"></img>
-                </Grid>
-                <Grid item>
-                  <MDBox mb={3}>
-                    <MDButton component="label" variant="contained" startIcon={<CloudUploadIcon />}>
-                      Upload Foto Profil
-                      <VisuallyHiddenInput type="file" onChange={onSelectFile} />
-                    </MDButton>
-                  </MDBox>
-                </Grid>
-              </Grid>
-              <Grid item>
+          <MDBox
+            mx={2}
+            py={3}
+            px={2}
+            mt={-3}
+            mb={3}
+            variant="gradient"
+            bgColor="info"
+            borderRadius="lg"
+            coloredShadow="info"
+          >
+            <MDTypography id="modal-modal-title" variant="h6" color="white">
+              Tambah Anggota
+            </MDTypography>
+          </MDBox>
+          <MDBox mx={5}>
+            <Grid container spacing={2}>
+              <Grid item xs={12} md={6}>
                 <MDBox mb={3}>
                   <MDTypography mb={1} variant="body2" fontWeight="bold">
-                    Nomor Telepon
+                    Nama
                   </MDTypography>
                   <MDInput
-                    value={phoneNumber}
+                    type="text"
+                    value={name}
                     onChange={(e) => {
-                      setPhoneNumber(e.target.value);
+                      setName(e.target.value);
                     }}
-                    type="tel"
+                    required
+                    fullWidth
+                  />
+                </MDBox>
+                <MDBox mb={3}>
+                  <MDTypography mb={1} variant="body2" fontWeight="bold">
+                    ID Anggota
+                  </MDTypography>
+                  <MDInput
+                    type="text"
+                    value={noId}
+                    onChange={(e) => {
+                      setNoId(e.target.value);
+                    }}
+                    required
+                    fullWidth
+                  />
+                </MDBox>
+                <MDBox mb={3}>
+                  <MDTypography mb={1} variant="body2" fontWeight="bold">
+                    Tanggal Lahir
+                  </MDTypography>
+                  <MDInput
+                    value={date}
+                    onChange={(e) => {
+                      setDate(e.target.value);
+                    }}
+                    type="date"
+                    required
+                    fullWidth
+                  />
+                </MDBox>
+                <MDBox mb={3}>
+                  <MDTypography mb={1} variant="body2" fontWeight="bold">
+                    Jenis Kelamin
+                  </MDTypography>
+                  <FormControl fullWidth>
+                    <InputLabel id="demo-simple-select-label">Gender</InputLabel>
+                    <Select
+                      value={gender}
+                      onChange={(e) => {
+                        setGender(e.target.value);
+                      }}
+                      style={{ height: "44px" }}
+                      label="gender"
+                    >
+                      <MenuItem value="MALE">Laki-laki</MenuItem>
+                      <MenuItem value="FEMALE">Perempuan</MenuItem>
+                    </Select>
+                  </FormControl>
+                </MDBox>
+                <MDBox mb={3}>
+                  <MDTypography mb={1} variant="body2" fontWeight="bold">
+                    Email
+                  </MDTypography>
+                  <MDInput
+                    value={email}
+                    onChange={(e) => {
+                      setEmail(e.target.value);
+                    }}
+                    type="email"
                     required
                     fullWidth
                   />
                 </MDBox>
               </Grid>
+              <Grid item xs={12} md={6}>
+                <Grid container flexDirection="column" alignItems="center">
+                  <Grid item style={{ flex: "1" }}>
+                    <img
+                      src={preview}
+                      style={{ margin: "auto" }}
+                      height="333px"
+                      width="250px"
+                    ></img>
+                  </Grid>
+                  <Grid item>
+                    <MDBox mb={3}>
+                      <MDButton
+                        component="label"
+                        variant="contained"
+                        startIcon={<CloudUploadIcon />}
+                      >
+                        Upload Foto Profil
+                        <VisuallyHiddenInput type="file" onChange={onSelectFile} />
+                      </MDButton>
+                    </MDBox>
+                  </Grid>
+                </Grid>
+                <Grid item>
+                  <MDBox mb={3}>
+                    <MDTypography mb={1} variant="body2" fontWeight="bold">
+                      Nomor Telepon
+                    </MDTypography>
+                    <MDInput
+                      value={phoneNumber}
+                      onChange={(e) => {
+                        setPhoneNumber(e.target.value);
+                      }}
+                      type="tel"
+                      required
+                      fullWidth
+                    />
+                  </MDBox>
+                </Grid>
+              </Grid>
             </Grid>
-          </Grid>
+          </MDBox>
+          <MDBox style={{ display: "flex", justifyContent: "flex-end" }} mx={5} mb={3}>
+            <MDButton type="submit" color="info">
+              {loading == true ? <Loader /> : "Submit"}
+            </MDButton>
+          </MDBox>
         </MDBox>
-        <MDBox style={{ display: "flex", justifyContent: "flex-end" }} mx={5} mb={3}>
-          <MDButton onClick={addMember} color="info">
-            {loading == true ? <Loader /> : "Submit"}
-          </MDButton>
-        </MDBox>
-      </MDBox>
+      </form>
     </Modal>
   );
 }
