@@ -14,6 +14,7 @@ import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 
 import { styled } from "@mui/material/styles";
 import peopleImage from "assets/images/people-image.webp";
+import Loader from "components/Util/Loader/loader";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { privateAxios } from "UtilRequests/util-axios";
@@ -27,6 +28,7 @@ function AddMemberModal(props) {
   const [gender, setGender] = useState("MALE");
   const [email, setEmail] = useState();
   const [phoneNumber, setPhoneNumber] = useState();
+  const [loading, setLoading] = useState(false);
 
   AddMemberModal.propTypes = {
     open: PropTypes.bool.isRequired,
@@ -74,6 +76,7 @@ function AddMemberModal(props) {
   };
 
   const addMember = async () => {
+    setLoading(true);
     const formData = new FormData();
     formData.append("name", name);
     formData.append("noId", noId);
@@ -94,6 +97,7 @@ function AddMemberModal(props) {
       console.log("error", error);
       return;
     }
+    setLoading(false);
     props.setOpen(false);
     toast.success("Berhasil Menambahkan Data Anggota", {
       position: "top-right",
@@ -257,7 +261,7 @@ function AddMemberModal(props) {
         </MDBox>
         <MDBox style={{ display: "flex", justifyContent: "flex-end" }} mx={5} mb={3}>
           <MDButton onClick={addMember} color="info">
-            Submit
+            {loading == true ? <Loader /> : "Submit"}
           </MDButton>
         </MDBox>
       </MDBox>
