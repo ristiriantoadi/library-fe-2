@@ -13,7 +13,7 @@ import PropTypes from "prop-types";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 
 import { styled } from "@mui/material/styles";
-import peopleImage from "assets/images/people-image.jpg";
+import peopleImage from "assets/images/people-image.webp";
 import { useEffect, useState } from "react";
 
 function EditMemberModal(props) {
