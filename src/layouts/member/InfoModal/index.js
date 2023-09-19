@@ -91,7 +91,7 @@ function InfoModal(props) {
             </MDBox>
           </Grid>
           <Grid item xs={12} sm={12} md={12} lg={4} pb={2}>
-            <img src={props.member.profilePicture} height={"241px"}></img>
+            <img src={props.member.profilePicture} height={"241px"} width="321px"></img>
           </Grid>
         </Grid>
         <BasicTabs></BasicTabs>
@@ -99,5 +99,4 @@ function InfoModal(props) {
     </Modal>
   );
 }
-
 export default InfoModal;
