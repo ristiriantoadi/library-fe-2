@@ -90,8 +90,8 @@ function InfoModal(props) {
               <MDTypography variant="body2">{props.member.phoneNumber}</MDTypography>
             </MDBox>
           </Grid>
-          <Grid item xs={12} sm={12} md={12} lg={4} pb={2}>
-            <img src={props.member.profilePicture} height={"241px"} width="321px"></img>
+          <Grid item xs={12} sm={12} md={12} lg={12} xl={4} pb={2}>
+            <img src={props.member.profilePicture} style={{ maxWidth: "300px" }}></img>
           </Grid>
         </Grid>
         <BasicTabs></BasicTabs>
