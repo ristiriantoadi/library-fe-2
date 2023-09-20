@@ -3,7 +3,6 @@ import Modal from "@mui/material/Modal";
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import PropTypes from "prop-types";
-import { useState } from "react";
 import BasicTabs from "./BasicTabs";
 
 function InfoModal(props) {
@@ -12,9 +11,6 @@ function InfoModal(props) {
     setOpen: PropTypes.func.isRequired, // Example: function prop
     member: PropTypes.object,
   };
-  const [value, setValue] = useState(0);
-
-  console.log("member", props.member);
 
   return (
     <Modal

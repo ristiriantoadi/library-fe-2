@@ -79,7 +79,10 @@ function member() {
                   variant="caption"
                   color="text"
                   fontWeight="medium"
-                  onClick={() => setOpenEditMember(true)}
+                  onClick={() => {
+                    setOpenEditMember(true);
+                    setIndex(index);
+                  }}
                 >
                   <EditIcon></EditIcon>
                   Edit
@@ -115,7 +118,12 @@ function member() {
         member={members[index]}
         setOpen={setOpenInfoMember}
       ></InfoModal>
-      <EditMemberModal open={openEditMember} setOpen={setOpenEditMember}></EditMemberModal>
+      <EditMemberModal
+        member={members[index]}
+        open={openEditMember}
+        setOpen={setOpenEditMember}
+        editSuccess={fetchData}
+      ></EditMemberModal>
       <Grid container spacing={6}>
         <Grid item xs={12}>
           <Card>
