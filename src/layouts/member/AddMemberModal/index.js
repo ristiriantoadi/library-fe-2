@@ -95,6 +95,7 @@ function AddMemberModal(props) {
       await privateAxios.post("/admin/member/create", formData, config);
     } catch (error) {
       console.log("error", error);
+      setLoading(false);
       return;
     }
     setLoading(false);

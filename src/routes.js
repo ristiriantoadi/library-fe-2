@@ -36,7 +36,7 @@ Coded by www.creative-tim.com
 */
 
 // Material Dashboard 2 React layouts
-import Billing from "layouts/billing";
+import Book from "layouts/book";
 import Configuration from "layouts/configuration";
 import Dashboard from "layouts/dashboard";
 import Logout from "layouts/logout";
@@ -70,7 +70,7 @@ const routes = [
     key: "book",
     icon: <Icon fontSize="small">book</Icon>,
     route: "/buku",
-    component: <Billing />,
+    component: <Book />,
   },
   {
     type: "collapse",
