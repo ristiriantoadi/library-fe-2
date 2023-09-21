@@ -25,7 +25,7 @@ function Book() {
   const [openAddBook, setOpenAddBook] = useState(false);
   const [openInfo, setOpenInfo] = useState(false);
   const [index, setIndex] = useState(0);
-  const [books, setBooks] = useState([]);
+  const [books, setBooks] = useState([{}]);
 
   const fetchData = async () => {
     privateAxios
