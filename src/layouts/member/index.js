@@ -42,9 +42,7 @@ function member() {
 
   const fetchData = () => {
     privateAxios
-      .get("/admin/member", {
-        params: { size: 10, page: 0, sort: "createTime", dir: -1 },
-      })
+      .get("/admin/member")
       .then((response) => {
         setMembers(response.data.content);
         let data = [];

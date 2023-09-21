@@ -1,13 +1,16 @@
 import AddIcon from "@mui/icons-material/Add";
+import EditIcon from "@mui/icons-material/Edit";
+import InfoIcon from "@mui/icons-material/Info";
 import Card from "@mui/material/Card";
 import Grid from "@mui/material/Grid";
 import MDBox from "components/MDBox";
 import MDButton from "components/MDButton";
 import MDTypography from "components/MDTypography";
 import DataTable from "examples/Tables/DataTable";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { privateAxios } from "UtilRequests/util-axios";
 import AddBookModal from "./AddBookModal";
-
+import style from "./style.module.css";
 function Book() {
   const columns = [
     { Header: "Judul", accessor: "title", align: "left" },
@@ -17,8 +20,67 @@ function Book() {
     { Header: "Stok", accessor: "stock", align: "left" },
     { Header: "Aksi", accessor: "action", align: "center" },
   ];
-  const rows = [];
+  const [rows, setRows] = useState([]);
   const [openAddBook, setOpenAddBook] = useState(false);
+
+  const fetchData = async () => {
+    privateAxios
+      .get("/admin/book")
+      .then((response) => {
+        // console.log("data", response);
+        const dataRows = response.data.map((d, index) => {
+          return {
+            title: d.title,
+            isbn: d.isbn,
+            author: d.author,
+            publisher: d.publisher,
+            stock: d.stock,
+            action: (
+              <div style={{ display: "flex", justifyContent: "space-evenly", width: "120px" }}>
+                <MDTypography
+                  className={style.link}
+                  component="a"
+                  href="#"
+                  variant="caption"
+                  color="text"
+                  fontWeight="medium"
+                  // onClick={() => {
+                  //   setOpenInfoMember(true);
+                  //   setIndex(index);
+                  // }}
+                >
+                  <InfoIcon fontSize="inherit"></InfoIcon> Info
+                </MDTypography>
+                <MDTypography
+                  className={style.link}
+                  verticalAlign="center"
+                  component="a"
+                  href="#"
+                  variant="caption"
+                  color="text"
+                  fontWeight="medium"
+                  // onClick={() => {
+                  //   setOpenEditMember(true);
+                  //   setIndex(index);
+                  // }}
+                >
+                  <EditIcon></EditIcon>
+                  Edit
+                </MDTypography>
+              </div>
+            ),
+          };
+        });
+        setRows(dataRows);
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   return (
     <MDBox pt={6} pb={3}>
