@@ -11,8 +11,11 @@ import MDBox from "components/MDBox";
 import MDButton from "components/MDButton";
 import MDInput from "components/MDInput";
 import MDTypography from "components/MDTypography";
+import Loader from "components/Util/Loader/loader";
 import PropTypes from "prop-types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
+import { privateAxios } from "UtilRequests/util-axios";
 
 function AddBookModal(props) {
   AddBookModal.propTypes = {
@@ -21,6 +24,14 @@ function AddBookModal(props) {
   };
   const [authors, setAuthors] = useState([""]);
   const [publicationYear, setPublicationYear] = useState(2000);
+  const [title, setTitle] = useState();
+  const [isbn, setIsbn] = useState();
+  const [publisher, setPublisher] = useState();
+  const [category, setCategory] = useState();
+  const [cover, setCover] = useState();
+  const [stock, setStock] = useState();
+  const [preview, setPreview] = useState();
+  const [loading, setLoading] = useState(false);
 
   const addAuthor = () => {
     const authorsCopy = [...authors];
@@ -35,7 +46,6 @@ function AddBookModal(props) {
   };
 
   const deleteAuthor = (indexDelete) => {
-    let authorsCopy = [...authors];
     let authorsCopyTwo = [];
     authors.forEach((item, index) => {
       if (index !== indexDelete) {
@@ -57,6 +67,87 @@ function AddBookModal(props) {
     width: 1,
   });
 
+  useEffect(() => {
+    if (!cover) {
+      setPreview(undefined);
+      return;
+    }
+    const objectUrl = URL.createObjectURL(cover);
+    setPreview(objectUrl);
+    console.log("preview set");
+
+    // free memory when ever this component is unmounted
+    return () => URL.revokeObjectURL(objectUrl);
+  }, [cover]);
+
+  const resetInput = () => {
+    setAuthors([""]);
+    setPublicationYear();
+    setTitle();
+    setIsbn();
+    setPublisher();
+    setCategory();
+    setCover();
+    setStock();
+    setPreview();
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    if (!cover) {
+      console.log("cover not set");
+      toast.error("Harap mengunggah gambar cover", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+      setLoading(false);
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("isbn", isbn);
+    formData.append("author", authors[0]);
+    formData.append("publicationYear", publicationYear);
+    formData.append("publisher", publisher);
+    formData.append("category", category);
+    formData.append("stock", stock);
+    formData.append("cover", cover);
+
+    const config = {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    };
+    try {
+      await privateAxios.post("/admin/book/", formData, config);
+    } catch (error) {
+      console.log("error", error);
+      setLoading(false);
+      return;
+    }
+    setLoading(false);
+    props.setOpen(false);
+    toast.success("Berhasil Menambahkan Data Buku", {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+    });
+    resetInput();
+  };
+
   return (
     <Modal
       open={props.open}
@@ -64,7 +155,7 @@ function AddBookModal(props) {
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
-      <form>
+      <form onSubmit={handleSubmit}>
         <MDBox
           bgColor="white"
           style={{
@@ -98,7 +189,13 @@ function AddBookModal(props) {
                   <MDTypography mb={1} variant="body2" fontWeight="bold">
                     Judul
                   </MDTypography>
-                  <MDInput type="text" required fullWidth />
+                  <MDInput
+                    type="text"
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                    required
+                    fullWidth
+                  />
                 </MDBox>
                 <MDBox mb={3}>
                   <MDTypography mb={1} variant="body2" fontWeight="bold">
@@ -155,7 +252,15 @@ function AddBookModal(props) {
                   <MDTypography mb={1} variant="body2" fontWeight="bold">
                     Stok
                   </MDTypography>
-                  <MDInput type="number" min="0" step="1" required fullWidth />
+                  <MDInput
+                    type="number"
+                    min="0"
+                    step="1"
+                    required
+                    fullWidth
+                    value={stock}
+                    onChange={(e) => setStock(e.target.value)}
+                  />
                 </MDBox>
               </Grid>
               <Grid item xs={12} md={6}>
@@ -163,13 +268,25 @@ function AddBookModal(props) {
                   <MDTypography mb={1} variant="body2" fontWeight="bold">
                     ISBN
                   </MDTypography>
-                  <MDInput type="text" required fullWidth />
+                  <MDInput
+                    type="text"
+                    value={isbn}
+                    onChange={(e) => setIsbn(e.target.value)}
+                    required
+                    fullWidth
+                  />
                 </MDBox>
                 <MDBox mb={3}>
                   <MDTypography mb={1} variant="body2" fontWeight="bold">
                     Penerbit
                   </MDTypography>
-                  <MDInput type="text" required fullWidth />
+                  <MDInput
+                    type="text"
+                    required
+                    fullWidth
+                    value={publisher}
+                    onChange={(e) => setPublisher(e.target.value)}
+                  />
                 </MDBox>
                 <MDBox mb={3}>
                   <MDTypography mb={1} variant="body2" fontWeight="bold">
@@ -177,7 +294,12 @@ function AddBookModal(props) {
                   </MDTypography>
                   <FormControl fullWidth>
                     <InputLabel id="demo-simple-select-label">Kategori</InputLabel>
-                    <Select style={{ height: "44px" }} label="category">
+                    <Select
+                      value={category}
+                      onChange={(e) => setCategory(e.target.value)}
+                      style={{ height: "44px" }}
+                      label="category"
+                    >
                       <MenuItem value="literature">Sastra</MenuItem>
                       <MenuItem value="science">Sains</MenuItem>
                       <MenuItem value="tech">Teknologi</MenuItem>
@@ -191,7 +313,16 @@ function AddBookModal(props) {
                   </MDTypography>
                   <MDButton component="label" variant="contained" startIcon={<CloudUploadIcon />}>
                     Upload Cover
-                    <VisuallyHiddenInput type="file" />
+                    <VisuallyHiddenInput
+                      type="file"
+                      onChange={(e) => setCover(e.target.files[0])}
+                    />
+                  </MDButton>
+                </MDBox>
+                <MDBox mb={3}>{preview && <img src={preview} style={{ width: "225px" }} />}</MDBox>
+                <MDBox style={{ display: "flex", justifyContent: "flex-end" }} mb={3}>
+                  <MDButton type="submit" color="info">
+                    {loading == true ? <Loader /> : "Submit"}
                   </MDButton>
                 </MDBox>
               </Grid>
