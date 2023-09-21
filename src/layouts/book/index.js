@@ -10,6 +10,7 @@ import DataTable from "examples/Tables/DataTable";
 import { useEffect, useState } from "react";
 import { privateAxios } from "UtilRequests/util-axios";
 import AddBookModal from "./AddBookModal";
+import InfoBookModal from "./InfoBookModal/infoBookModal";
 import style from "./style.module.css";
 function Book() {
   const columns = [
@@ -22,12 +23,16 @@ function Book() {
   ];
   const [rows, setRows] = useState([]);
   const [openAddBook, setOpenAddBook] = useState(false);
+  const [openInfo, setOpenInfo] = useState(false);
+  const [index, setIndex] = useState(0);
+  const [books, setBooks] = useState([]);
 
   const fetchData = async () => {
     privateAxios
       .get("/admin/book")
       .then((response) => {
         // console.log("data", response);
+        setBooks(response.data);
         const dataRows = response.data.map((d, index) => {
           return {
             title: d.title,
@@ -44,10 +49,10 @@ function Book() {
                   variant="caption"
                   color="text"
                   fontWeight="medium"
-                  // onClick={() => {
-                  //   setOpenInfoMember(true);
-                  //   setIndex(index);
-                  // }}
+                  onClick={() => {
+                    setOpenInfo(true);
+                    setIndex(index);
+                  }}
                 >
                   <InfoIcon fontSize="inherit"></InfoIcon> Info
                 </MDTypography>
@@ -85,6 +90,7 @@ function Book() {
   return (
     <MDBox pt={6} pb={3}>
       <AddBookModal open={openAddBook} setOpen={setOpenAddBook}></AddBookModal>
+      <InfoBookModal open={openInfo} setOpen={setOpenInfo} book={books[index]} />
       <Grid container spacing={6}>
         <Grid item xs={12}>
           <Card>
