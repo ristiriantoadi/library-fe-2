@@ -1,6 +1,12 @@
+import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Grid } from "@mui/material";
+import FormControl from "@mui/material/FormControl";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
 import Modal from "@mui/material/Modal";
+import Select from "@mui/material/Select";
+import { styled } from "@mui/material/styles";
 import MDBox from "components/MDBox";
 import MDButton from "components/MDButton";
 import MDInput from "components/MDInput";
@@ -14,6 +20,7 @@ function AddBookModal(props) {
     setOpen: PropTypes.func.isRequired,
   };
   const [authors, setAuthors] = useState([""]);
+  const [publicationYear, setPublicationYear] = useState(2000);
 
   const addAuthor = () => {
     const authorsCopy = [...authors];
@@ -37,6 +44,18 @@ function AddBookModal(props) {
     });
     setAuthors(authorsCopyTwo);
   };
+
+  const VisuallyHiddenInput = styled("input")({
+    clip: "rect(0 0 0 0)",
+    clipPath: "inset(50%)",
+    height: 1,
+    overflow: "hidden",
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    whiteSpace: "nowrap",
+    width: 1,
+  });
 
   return (
     <Modal
@@ -117,6 +136,27 @@ function AddBookModal(props) {
                     Tambah Penulis
                   </MDButton>
                 </MDBox>
+                <MDBox mb={3}>
+                  <MDTypography mb={1} variant="body2" fontWeight="bold">
+                    Tahun Terbit
+                  </MDTypography>
+                  <MDInput
+                    type="number"
+                    min="1900"
+                    max="2099"
+                    value={publicationYear}
+                    onChange={(e) => setPublicationYear(e.target.value)}
+                    step="1"
+                    required
+                    fullWidth
+                  />
+                </MDBox>
+                <MDBox mb={3}>
+                  <MDTypography mb={1} variant="body2" fontWeight="bold">
+                    Stok
+                  </MDTypography>
+                  <MDInput type="number" min="0" step="1" required fullWidth />
+                </MDBox>
               </Grid>
               <Grid item xs={12} md={6}>
                 <MDBox mb={3}>
@@ -130,6 +170,29 @@ function AddBookModal(props) {
                     Penerbit
                   </MDTypography>
                   <MDInput type="text" required fullWidth />
+                </MDBox>
+                <MDBox mb={3}>
+                  <MDTypography mb={1} variant="body2" fontWeight="bold">
+                    Kategori
+                  </MDTypography>
+                  <FormControl fullWidth>
+                    <InputLabel id="demo-simple-select-label">Kategori</InputLabel>
+                    <Select style={{ height: "44px" }} label="category">
+                      <MenuItem value="literature">Sastra</MenuItem>
+                      <MenuItem value="science">Sains</MenuItem>
+                      <MenuItem value="tech">Teknologi</MenuItem>
+                      <MenuItem value="history">Sejarah</MenuItem>
+                    </Select>
+                  </FormControl>
+                </MDBox>
+                <MDBox mb={3}>
+                  <MDTypography mb={1} variant="body2" fontWeight="bold">
+                    Cover
+                  </MDTypography>
+                  <MDButton component="label" variant="contained" startIcon={<CloudUploadIcon />}>
+                    Upload Cover
+                    <VisuallyHiddenInput type="file" />
+                  </MDButton>
                 </MDBox>
               </Grid>
             </Grid>
