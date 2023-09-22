@@ -96,7 +96,6 @@ function AddBookModal(props) {
     e.preventDefault();
     setLoading(true);
     if (!cover) {
-      console.log("cover not set");
       toast.error("Harap mengunggah gambar cover", {
         position: "top-right",
         autoClose: 3000,
@@ -114,7 +113,7 @@ function AddBookModal(props) {
     const formData = new FormData();
     formData.append("title", title);
     formData.append("isbn", isbn);
-    formData.append("author", authors[0]);
+    formData.append("author", authors.join(","));
     formData.append("publicationYear", publicationYear);
     formData.append("publisher", publisher);
     formData.append("category", category);
