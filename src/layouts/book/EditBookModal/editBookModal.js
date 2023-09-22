@@ -22,7 +22,7 @@ function EditBookModal(props) {
     open: PropTypes.bool.isRequired,
     setOpen: PropTypes.func.isRequired,
     book: PropTypes.object.isRequired,
-    fetchData: PropTypes.object.isRequired,
+    fetchData: PropTypes.func.isRequired,
   };
   const [authors, setAuthors] = useState([""]);
   const [publicationYear, setPublicationYear] = useState(2000);

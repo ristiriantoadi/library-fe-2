@@ -9,6 +9,8 @@ import MDButton from "components/MDButton";
 import MDTypography from "components/MDTypography";
 import DataTable from "examples/Tables/DataTable";
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
+import { confirmPopUp } from "UtilComponents/UtilSweetAlert";
 import { privateAxios } from "UtilRequests/util-axios";
 import AddBookModal from "./AddBookModal";
 import EditBookModal from "./EditBookModal/editBookModal";
@@ -27,7 +29,7 @@ function Book() {
   const [rows, setRows] = useState([]);
   const [openAddBook, setOpenAddBook] = useState(false);
   const [openInfo, setOpenInfo] = useState(false);
-  const [openEditBook, setOpenEditBook] = useState();
+  const [openEditBook, setOpenEditBook] = useState(false);
   const [index, setIndex] = useState(0);
   const [books, setBooks] = useState([{}]);
 
@@ -35,7 +37,11 @@ function Book() {
     privateAxios
       .get("/admin/book")
       .then((response) => {
-        setBooks(response.data);
+        if (response.data.length == 0) {
+          setBooks([{}]);
+        } else {
+          setBooks(response.data);
+        }
         const dataRows = response.data.map((d, index) => {
           return {
             title: d.title,
@@ -86,8 +92,7 @@ function Book() {
                   color="text"
                   fontWeight="medium"
                   onClick={() => {
-                    setOpenEditBook(true);
-                    setIndex(index);
+                    deleteBook(index, response.data);
                   }}
                 >
                   <DeleteIcon></DeleteIcon>
@@ -102,6 +107,34 @@ function Book() {
       .catch((error) => {
         console.log("error", error);
       });
+  };
+
+  const deleteBook = (index, books) => {
+    console.log("books", books);
+    confirmPopUp(
+      () => {
+        console.log("books", books);
+        privateAxios
+          .delete("/admin/book/" + books[index]["_id"])
+          .then((response) => {
+            toast.success("Berhasil menghapus buku", {
+              position: "top-right",
+              autoClose: 3000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "colored",
+            });
+            fetchData();
+          })
+          .catch((error) => {
+            console.error("error", error);
+          });
+      },
+      () => {}
+    );
   };
 
   useEffect(() => {
