@@ -41,7 +41,7 @@ privateAxios.interceptors.response.use(
   },
   (error) => {
     // Handle response errors
-    console.log("private error", error);
+    console.error("private error", error);
     toast.error(getErrorMessage(error), {
       position: "top-right",
       autoClose: 3000,
@@ -52,7 +52,9 @@ privateAxios.interceptors.response.use(
       progress: undefined,
       theme: "colored",
     });
-    if (error.response.status == 401) window.location.href = "/login";
+    if (error.response) {
+      if (error.response.status == 401) window.location.href = "/login";
+    }
     return Promise.reject(error);
   }
 );

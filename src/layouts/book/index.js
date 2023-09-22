@@ -92,7 +92,7 @@ function Book() {
                   color="text"
                   fontWeight="medium"
                   onClick={() => {
-                    deleteBook(index, response.data);
+                    deleteBook(d["_id"]);
                   }}
                 >
                   <DeleteIcon></DeleteIcon>
@@ -109,12 +109,11 @@ function Book() {
       });
   };
 
-  const deleteBook = (index, books) => {
+  const deleteBook = (id) => {
     confirmDelete(
       () => {
-        console.log("books", books);
         privateAxios
-          .delete("/admin/book/" + books[index]["_id"])
+          .delete("/admin/book/" + id)
           .then((response) => {
             toast.success("Berhasil menghapus buku", {
               position: "top-right",
