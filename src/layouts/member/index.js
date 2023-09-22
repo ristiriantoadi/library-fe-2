@@ -8,10 +8,13 @@ import MDTypography from "components/MDTypography";
 import DataTable from "examples/Tables/DataTable";
 // Material Dashboard 2 React example components
 import AddIcon from "@mui/icons-material/Add";
+import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import InfoIcon from "@mui/icons-material/Info";
 import MDButton from "components/MDButton";
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
+import { confirmDelete } from "UtilComponents/UtilSweetAlert";
 import { privateAxios } from "UtilRequests/util-axios";
 import AddMemberModal from "./AddMemberModal";
 import EditMemberModal from "./EditMemberModal";
@@ -36,9 +39,34 @@ function member() {
     { Header: "ID Anggota", accessor: "memberId", align: "left" },
     { Header: "Email", accessor: "email", align: "left" },
     { Header: "Nomor Telepon", accessor: "phoneNumber", align: "left" },
-    { Header: "Status", accessor: "status", align: "center" },
-    { Header: "Aksi", accessor: "action", align: "center" },
+    { Header: "Aksi", accessor: "action", align: "left" },
   ];
+
+  const deleteMember = (id) => {
+    confirmDelete(
+      () => {
+        privateAxios
+          .delete("/admin/member/" + id)
+          .then((response) => {
+            toast.success("Berhasil menghapus anggota", {
+              position: "top-right",
+              autoClose: 3000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "colored",
+            });
+            fetchData();
+          })
+          .catch((error) => {
+            console.error("error", error);
+          });
+      },
+      () => {}
+    );
+  };
 
   const fetchData = () => {
     privateAxios
@@ -52,9 +80,8 @@ function member() {
             memberId: element.noId,
             email: element.email,
             phoneNumber: element.phoneNumber,
-            status: element.status,
             action: (
-              <div style={{ display: "flex", justifyContent: "space-evenly", width: "120px" }}>
+              <div style={{ display: "flex" }}>
                 <MDTypography
                   className={style.link}
                   component="a"
@@ -66,6 +93,7 @@ function member() {
                     setOpenInfoMember(true);
                     setIndex(index);
                   }}
+                  style={{ marginRight: "10px" }}
                 >
                   <InfoIcon fontSize="inherit"></InfoIcon> Info
                 </MDTypography>
@@ -81,9 +109,25 @@ function member() {
                     setOpenEditMember(true);
                     setIndex(index);
                   }}
+                  style={{ marginRight: "10px" }}
                 >
                   <EditIcon></EditIcon>
                   Edit
+                </MDTypography>
+                <MDTypography
+                  className={style.link}
+                  verticalAlign="center"
+                  component="a"
+                  href="#"
+                  variant="caption"
+                  color="text"
+                  fontWeight="medium"
+                  onClick={() => {
+                    deleteMember(element["_id"]);
+                  }}
+                >
+                  <DeleteIcon></DeleteIcon>
+                  Delete
                 </MDTypography>
               </div>
             ),

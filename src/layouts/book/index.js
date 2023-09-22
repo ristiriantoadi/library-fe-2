@@ -10,7 +10,7 @@ import MDTypography from "components/MDTypography";
 import DataTable from "examples/Tables/DataTable";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { confirmPopUp } from "UtilComponents/UtilSweetAlert";
+import { confirmDelete } from "UtilComponents/UtilSweetAlert";
 import { privateAxios } from "UtilRequests/util-axios";
 import AddBookModal from "./AddBookModal";
 import EditBookModal from "./EditBookModal/editBookModal";
@@ -110,8 +110,7 @@ function Book() {
   };
 
   const deleteBook = (index, books) => {
-    console.log("books", books);
-    confirmPopUp(
+    confirmDelete(
       () => {
         console.log("books", books);
         privateAxios

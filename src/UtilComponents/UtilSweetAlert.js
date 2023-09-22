@@ -1,11 +1,11 @@
 import Swal from "sweetalert2";
-export const confirmPopUp = (handleConfirm, handleDenied) => {
+export const confirmDelete = (handleConfirm, handleDenied) => {
   Swal.fire({
-    title: "Are you sure you want to delete?",
+    title: "Anda yakin ingin menghapus data?",
     showCancelButton: true,
-    confirmButtonText: "Yes",
+    confirmButtonText: "Ya",
     confirmButtonColor: "#f44336",
-    denyButtonText: `Cancel`,
+    denyButtonText: `Batal`,
   }).then((result) => {
     /* Read more about isConfirmed, isDenied below */
     if (result.isConfirmed) {
