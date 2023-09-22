@@ -1,4 +1,5 @@
 import AddIcon from "@mui/icons-material/Add";
+import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import InfoIcon from "@mui/icons-material/Info";
 import Card from "@mui/material/Card";
@@ -13,14 +14,15 @@ import AddBookModal from "./AddBookModal";
 import EditBookModal from "./EditBookModal/editBookModal";
 import InfoBookModal from "./InfoBookModal/infoBookModal";
 import style from "./style.module.css";
+
 function Book() {
   const columns = [
     { Header: "Judul", accessor: "title", align: "left" },
     { Header: "ISBN", accessor: "isbn", align: "left" },
     { Header: "Penulis", accessor: "author", align: "left" },
-    { Header: "Penerbit", accessor: "publisher", align: "left" },
+    { Header: "Kategori", accessor: "category", align: "left" },
     { Header: "Stok", accessor: "stock", align: "left" },
-    { Header: "Aksi", accessor: "action", align: "center" },
+    { Header: "Aksi", accessor: "action", align: "left" },
   ];
   const [rows, setRows] = useState([]);
   const [openAddBook, setOpenAddBook] = useState(false);
@@ -39,10 +41,10 @@ function Book() {
             title: d.title,
             isbn: d.isbn,
             author: d.author.split(",")[0],
-            publisher: d.publisher,
+            category: d.category,
             stock: d.stock,
             action: (
-              <div style={{ display: "flex", justifyContent: "space-evenly", width: "120px" }}>
+              <div style={{ display: "flex" }}>
                 <MDTypography
                   className={style.link}
                   component="a"
@@ -54,6 +56,7 @@ function Book() {
                     setOpenInfo(true);
                     setIndex(index);
                   }}
+                  style={{ marginRight: "10px" }}
                 >
                   <InfoIcon fontSize="inherit"></InfoIcon> Info
                 </MDTypography>
@@ -69,9 +72,26 @@ function Book() {
                     setOpenEditBook(true);
                     setIndex(index);
                   }}
+                  style={{ marginRight: "10px" }}
                 >
                   <EditIcon></EditIcon>
                   Edit
+                </MDTypography>
+                <MDTypography
+                  className={style.link}
+                  verticalAlign="center"
+                  component="a"
+                  href="#"
+                  variant="caption"
+                  color="text"
+                  fontWeight="medium"
+                  onClick={() => {
+                    setOpenEditBook(true);
+                    setIndex(index);
+                  }}
+                >
+                  <DeleteIcon></DeleteIcon>
+                  Delete
                 </MDTypography>
               </div>
             ),
