@@ -33,7 +33,6 @@ function Book() {
     privateAxios
       .get("/admin/book")
       .then((response) => {
-        // console.log("data", response);
         setBooks(response.data);
         const dataRows = response.data.map((d, index) => {
           return {
@@ -91,7 +90,11 @@ function Book() {
 
   return (
     <MDBox pt={6} pb={3}>
-      <AddBookModal open={openAddBook} setOpen={setOpenAddBook}></AddBookModal>
+      <AddBookModal
+        open={openAddBook}
+        fetchData={fetchData}
+        setOpen={setOpenAddBook}
+      ></AddBookModal>
       <InfoBookModal open={openInfo} setOpen={setOpenInfo} book={books[index]} />
       <EditBookModal open={openEditBook} setOpen={setOpenEditBook} book={books[index]} />
       <Grid container spacing={6}>
