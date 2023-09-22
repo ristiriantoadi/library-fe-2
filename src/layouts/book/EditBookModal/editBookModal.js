@@ -14,12 +14,15 @@ import MDTypography from "components/MDTypography";
 import Loader from "components/Util/Loader/loader";
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
+import { privateAxios } from "UtilRequests/util-axios";
 
 function EditBookModal(props) {
   EditBookModal.propTypes = {
     open: PropTypes.bool.isRequired,
     setOpen: PropTypes.func.isRequired,
-    book: PropTypes.object,
+    book: PropTypes.object.isRequired,
+    fetchData: PropTypes.object.isRequired,
   };
   const [authors, setAuthors] = useState([""]);
   const [publicationYear, setPublicationYear] = useState(2000);
@@ -51,7 +54,6 @@ function EditBookModal(props) {
     setIsbn(props.book.isbn);
     setPublisher(props.book.publisher);
     setCategory(props.book.category);
-    setCover(props.book.cover);
     setStock(props.book.stock);
     setPreview(props.book.cover);
   }, [props.book]);
@@ -78,6 +80,54 @@ function EditBookModal(props) {
     setAuthors(authorsCopyTwo);
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("isbn", isbn);
+    formData.append("author", authors.join(","));
+    formData.append("publicationYear", publicationYear);
+    formData.append("publisher", publisher);
+    formData.append("category", category);
+    formData.append("stock", stock);
+    if (cover) formData.append("cover", cover);
+    const config = {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    };
+    try {
+      await privateAxios.put("/admin/book/" + props.book["_id"], formData, config);
+    } catch (error) {
+      console.log("error", error);
+      setLoading(false);
+      return;
+    }
+    setLoading(false);
+    props.setOpen(false);
+    toast.success("Berhasil mengubah data buku", {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+    });
+    props.fetchData();
+  };
+
+  useEffect(() => {
+    if (!cover) return;
+    const objectUrl = URL.createObjectURL(cover);
+    setPreview(objectUrl);
+
+    // free memory when ever this component is unmounted
+    return () => URL.revokeObjectURL(objectUrl);
+  }, [cover]);
+
   return (
     <Modal
       open={props.open}
@@ -85,7 +135,7 @@ function EditBookModal(props) {
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
-      <form>
+      <form onSubmit={handleSubmit}>
         <MDBox
           bgColor="white"
           style={{

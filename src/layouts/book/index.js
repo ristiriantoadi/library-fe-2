@@ -96,7 +96,12 @@ function Book() {
         setOpen={setOpenAddBook}
       ></AddBookModal>
       <InfoBookModal open={openInfo} setOpen={setOpenInfo} book={books[index]} />
-      <EditBookModal open={openEditBook} setOpen={setOpenEditBook} book={books[index]} />
+      <EditBookModal
+        fetchData={fetchData}
+        open={openEditBook}
+        setOpen={setOpenEditBook}
+        book={books[index]}
+      />
       <Grid container spacing={6}>
         <Grid item xs={12}>
           <Card>

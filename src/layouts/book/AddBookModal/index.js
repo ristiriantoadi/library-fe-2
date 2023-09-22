@@ -75,7 +75,6 @@ function AddBookModal(props) {
     }
     const objectUrl = URL.createObjectURL(cover);
     setPreview(objectUrl);
-    console.log("preview set");
 
     // free memory when ever this component is unmounted
     return () => URL.revokeObjectURL(objectUrl);
