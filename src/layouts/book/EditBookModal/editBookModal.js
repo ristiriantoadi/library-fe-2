@@ -45,7 +45,7 @@ function EditBookModal(props) {
   });
 
   useEffect(() => {
-    // setAuthors()
+    if (props.book.author) setAuthors(props.book.author.split(","));
     setPublicationYear(props.book.publicationYear);
     setTitle(props.book.title);
     setIsbn(props.book.isbn);
