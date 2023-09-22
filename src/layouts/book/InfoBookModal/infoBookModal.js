@@ -11,6 +11,16 @@ function InfoBookModal(props) {
     setOpen: PropTypes.func.isRequired,
     book: PropTypes.object,
   };
+
+  const displayAuthors = () => {
+    if (props.book.author === undefined) return;
+    return props.book.author.split(",").map((author, index) => (
+      <MDTypography key={index} variant="body2">
+        {author}
+      </MDTypography>
+    ));
+  };
+
   return (
     <Modal
       open={props.open}
@@ -63,7 +73,7 @@ function InfoBookModal(props) {
                 <MDTypography variant="body2" fontWeight="bold">
                   Penulis
                 </MDTypography>
-                <MDTypography variant="body2">{props.book.author}</MDTypography>
+                {displayAuthors()}
               </MDBox>
               <MDBox mb={3}>
                 <MDTypography variant="body2" fontWeight="bold">

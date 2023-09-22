@@ -39,7 +39,7 @@ function Book() {
           return {
             title: d.title,
             isbn: d.isbn,
-            author: d.author,
+            author: d.author.split(",")[0],
             publisher: d.publisher,
             stock: d.stock,
             action: (
