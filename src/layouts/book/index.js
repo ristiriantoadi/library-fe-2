@@ -10,6 +10,7 @@ import DataTable from "examples/Tables/DataTable";
 import { useEffect, useState } from "react";
 import { privateAxios } from "UtilRequests/util-axios";
 import AddBookModal from "./AddBookModal";
+import EditBookModal from "./EditBookModal/editBookModal";
 import InfoBookModal from "./InfoBookModal/infoBookModal";
 import style from "./style.module.css";
 function Book() {
@@ -24,6 +25,7 @@ function Book() {
   const [rows, setRows] = useState([]);
   const [openAddBook, setOpenAddBook] = useState(false);
   const [openInfo, setOpenInfo] = useState(false);
+  const [openEditBook, setOpenEditBook] = useState();
   const [index, setIndex] = useState(0);
   const [books, setBooks] = useState([{}]);
 
@@ -64,10 +66,10 @@ function Book() {
                   variant="caption"
                   color="text"
                   fontWeight="medium"
-                  // onClick={() => {
-                  //   setOpenEditMember(true);
-                  //   setIndex(index);
-                  // }}
+                  onClick={() => {
+                    setOpenEditBook(true);
+                    setIndex(index);
+                  }}
                 >
                   <EditIcon></EditIcon>
                   Edit
@@ -91,6 +93,7 @@ function Book() {
     <MDBox pt={6} pb={3}>
       <AddBookModal open={openAddBook} setOpen={setOpenAddBook}></AddBookModal>
       <InfoBookModal open={openInfo} setOpen={setOpenInfo} book={books[index]} />
+      <EditBookModal open={openEditBook} setOpen={setOpenEditBook} book={books[index]} />
       <Grid container spacing={6}>
         <Grid item xs={12}>
           <Card>
