@@ -2,7 +2,6 @@ import Card from "@mui/material/Card";
 import Grid from "@mui/material/Grid";
 import MDBox from "components/MDBox";
 import MDButton from "components/MDButton";
-import MDInput from "components/MDInput";
 import MDTypography from "components/MDTypography";
 import { useEffect, useState } from "react";
 import { privateAxios } from "UtilRequests/util-axios";
@@ -10,17 +9,23 @@ import BookCard from "./components/bookCard";
 
 function Borrow() {
   const [member, setMember] = useState();
-  const [listMembers, setListMembers] = useState([]);
+  const [members, setMembers] = useState([]);
   const [name, setName] = useState();
   const [books, setBooks] = useState([]);
+  const [allBooks, setAllBooks] = useState([]);
   const [disabled, setDisabled] = useState(true);
+  const [bookTitle, setBookTitle] = useState();
 
   useEffect(() => {
-    privateAxios
-      .get("/admin/member")
-      .then((response) => {
-        setListMembers(response.data.content);
-        console.log("list members", listMembers);
+    const requestMembers = privateAxios.get("/admin/member");
+    const requestBooks = privateAxios.get("/admin/book");
+    Promise.all([requestMembers, requestBooks])
+      .then((responses) => {
+        const responseMembers = responses[0];
+        const responseBooks = responses[1];
+
+        setMembers(responseMembers.data.content);
+        setAllBooks(responseBooks.data);
       })
       .catch((error) => {
         return;
@@ -28,9 +33,22 @@ function Borrow() {
   }, []);
 
   const findMember = () => {
-    listMembers.forEach((m) => {
+    members.forEach((m) => {
       if (`${m.name} (${m.noId})` === name) {
         setMember(m);
+        return;
+      }
+    });
+  };
+
+  const addBook = () => {
+    let booksCopy = [...books];
+    allBooks.forEach((b) => {
+      if (`${b.title} (${b.isbn})` === bookTitle) {
+        // setMember(m);
+        booksCopy.push(b);
+        setBooks(booksCopy);
+        return;
       }
     });
   };
@@ -60,23 +78,19 @@ function Borrow() {
                   <MDTypography variant="h5" mb={1}>
                     Anggota
                   </MDTypography>
-                  <div>
+                  <div style={{ display: "flex", alignItems: "center" }}>
                     <input
                       list="members"
-                      placeholder="Nama Anggota ..."
-                      style={{ width: "300px", height: "40px", marginTop: "5px" }}
+                      placeholder="Nama Anggota"
+                      style={{ width: "300px", height: "40px" }}
                       onChange={(e) => setName(e.target.value)}
                     ></input>
                     <datalist id="members">
-                      {listMembers.map((m, index) => {
+                      {members.map((m, index) => {
                         return <option key={index} value={`${m.name} (${m.noId})`} />;
                       })}
                     </datalist>
-                    <MDButton
-                      onClick={findMember}
-                      style={{ marginLeft: "5px", marginTop: "5px" }}
-                      color="info"
-                    >
+                    <MDButton onClick={findMember} style={{ marginLeft: "5px" }} color="info">
                       Cari Anggota
                     </MDButton>
                   </div>
@@ -122,8 +136,18 @@ function Borrow() {
                     Buku
                   </MDTypography>
                   <div style={{ display: "flex", alignItems: "center" }}>
-                    <MDInput type="text" label="Judul" />
-                    <MDButton style={{ marginLeft: "5px" }} color="info">
+                    <input
+                      list="books"
+                      placeholder="Judul Buku"
+                      style={{ width: "300px", height: "40px", marginTop: "5px" }}
+                      onChange={(e) => setBookTitle(e.target.value)}
+                    ></input>
+                    <datalist id="books">
+                      {allBooks.map((book, index) => {
+                        return <option key={index} value={`${book.title} (${book.isbn})`} />;
+                      })}
+                    </datalist>
+                    <MDButton onClick={addBook} style={{ marginLeft: "5px" }} color="info">
                       Tambah
                     </MDButton>
                     <MDTypography style={{ marginLeft: "5px" }} variant="button">
@@ -135,7 +159,7 @@ function Borrow() {
               {member && (
                 <MDBox>
                   {books.map((b, index) => {
-                    return <BookCard key={index}></BookCard>;
+                    return <BookCard book={b} key={index}></BookCard>;
                   })}
                 </MDBox>
               )}
