@@ -21,6 +21,7 @@ function Borrow() {
   const BORROW_DURATION = 3;
   const [loading, setLoading] = useState(false);
   const [loadingFetchBooks, setLoadingFetchBooks] = useState(false);
+  const [remainingSlot, setRemainingSlot] = useState(MAX_BORROW);
 
   useEffect(() => {
     const requestMembers = privateAxios.get("/admin/member");
@@ -100,6 +101,9 @@ function Borrow() {
         progress: undefined,
         theme: "colored",
       });
+    else {
+      setRemainingSlot((remainingSlot) => remainingSlot - 1);
+    }
     setBookTitle("");
   };
 
@@ -259,7 +263,7 @@ function Borrow() {
                       Tambah
                     </MDButton>
                     <MDTypography style={{ marginLeft: "5px" }} variant="button">
-                      (Maks 3)
+                      {`(Sisa ${remainingSlot})`}
                     </MDTypography>
                   </div>
                 </MDBox>
