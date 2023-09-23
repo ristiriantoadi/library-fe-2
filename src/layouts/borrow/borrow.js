@@ -22,26 +22,34 @@ function Borrow() {
   const [loading, setLoading] = useState(false);
   const [loadingFetchBooks, setLoadingFetchBooks] = useState(false);
   const [remainingSlot, setRemainingSlot] = useState(MAX_BORROW);
+  // const [countBorrows, setCountBorrows] = useState(0e);
 
   useEffect(() => {
-    const requestMembers = privateAxios.get("/admin/member");
-    // const requestBooks = privateAxios.get("/admin/book");
-    Promise.all([requestMembers])
-      .then((responses) => {
-        const responseMembers = responses[0];
-        setMembers(responseMembers.data.content);
+    privateAxios
+      .get("/admin/member")
+      .then((response) => {
+        setMembers(response.data.content);
       })
-      .catch((error) => {
-        return;
-      });
+      .catch((error) => {});
   }, []);
 
   const fetchUnborrowedBooks = (member) => {
     setLoadingFetchBooks(true);
-    privateAxios
-      .get("/admin/book/unborrowed/" + member["_id"])
-      .then((response) => {
-        setAllBooks(response.data);
+    const requestBooks = privateAxios.get("/admin/book/unborrowed/" + member["_id"]);
+    const requestCountBorrows = privateAxios.get("admin/borrowing/total_count", {
+      params: { memberId: member["_id"], status: "Sedang Dipinjam" },
+    });
+    Promise.all([requestBooks, requestCountBorrows])
+      .then((responses) => {
+        const responseBooks = responses[0];
+        const responseCountBorrows = responses[1];
+
+        setAllBooks(responseBooks.data);
+
+        let countBorrows = responseCountBorrows.data.count;
+        setRemainingSlot(MAX_BORROW - countBorrows);
+
+        // Handle the responses here
       })
       .catch((error) => {});
     setLoadingFetchBooks(false);
