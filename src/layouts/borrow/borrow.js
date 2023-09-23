@@ -181,7 +181,12 @@ function Borrow() {
                         return <option key={index} value={`${book.title} (${book.isbn})`} />;
                       })}
                     </datalist>
-                    <MDButton onClick={addBook} style={{ marginLeft: "5px" }} color="info">
+                    <MDButton
+                      disabled={books.length == MAX_BORROW}
+                      onClick={addBook}
+                      style={{ marginLeft: "5px" }}
+                      color="info"
+                    >
                       Tambah
                     </MDButton>
                     <MDTypography style={{ marginLeft: "5px" }} variant="button">
