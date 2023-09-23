@@ -2,6 +2,8 @@ import MDBox from "components/MDBox";
 import DataTable from "examples/Tables/DataTable";
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
+import { addDate } from "util/util";
+import { BORROW_DURATION } from "util/util_constant";
 import { privateAxios } from "UtilRequests/util-axios";
 
 function BorrowingHistoryPanel(props) {
@@ -10,8 +12,8 @@ function BorrowingHistoryPanel(props) {
   };
   const columns = [
     { Header: "Judul Buku", accessor: "title", align: "left" },
-    { Header: "Tanggal Pinjam", accessor: "memberId", align: "left" },
-    { Header: "Tanggal Kembali", accessor: "email", align: "left" },
+    { Header: "Tanggal Pinjam", accessor: "borrowDate", align: "left" },
+    { Header: "Tanggal Kembali", accessor: "returnDate", align: "left" },
     { Header: "Status", accessor: "status", align: "center" },
   ];
   const [rows, setRows] = useState([]);
@@ -25,6 +27,8 @@ function BorrowingHistoryPanel(props) {
           return {
             title: borrow["book"]["title"],
             status: borrow["status"],
+            borrowDate: new Date(borrow["createTime"]).toDateString(),
+            returnDate: addDate(new Date(borrow["createTime"]), BORROW_DURATION).toDateString(),
           };
         });
         setRows(rows);

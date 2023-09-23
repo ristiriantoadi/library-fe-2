@@ -7,6 +7,7 @@ import Loader from "components/Util/Loader/loader";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { addDate } from "util/util";
+import { BORROW_DURATION } from "util/util_constant";
 import { privateAxios } from "UtilRequests/util-axios";
 import BookCard from "./components/bookCard";
 
@@ -18,11 +19,9 @@ function Borrow() {
   const [allBooks, setAllBooks] = useState([]);
   const [bookTitle, setBookTitle] = useState();
   const MAX_BORROW = 3;
-  const BORROW_DURATION = 3;
   const [loading, setLoading] = useState(false);
   const [loadingFetchBooks, setLoadingFetchBooks] = useState(false);
   const [remainingSlot, setRemainingSlot] = useState(MAX_BORROW);
-  // const [countBorrows, setCountBorrows] = useState(0e);
 
   useEffect(() => {
     privateAxios
