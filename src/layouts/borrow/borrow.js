@@ -58,11 +58,16 @@ function Borrow() {
 
   const addBook = () => {
     let booksCopy = [...books];
+    let allBooksCopy = [...allBooks];
     let found = false;
-    allBooks.forEach((b) => {
+    allBooks.forEach((b, index) => {
       if (`${b.title} (${b.isbn})` === bookTitle) {
         booksCopy.push(b);
         setBooks(booksCopy);
+
+        allBooksCopy.splice(index, 1);
+        setAllBooks(allBooksCopy);
+
         found = true;
         return;
       }
