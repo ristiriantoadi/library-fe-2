@@ -83,6 +83,7 @@ function Borrow() {
         progress: undefined,
         theme: "colored",
       });
+    setBookTitle("");
   };
 
   return (
@@ -172,6 +173,7 @@ function Borrow() {
                       list="books"
                       placeholder="Judul Buku"
                       style={{ width: "300px", height: "40px", marginTop: "5px" }}
+                      value={bookTitle}
                       onChange={(e) => setBookTitle(e.target.value)}
                     ></input>
                     <datalist id="books">
