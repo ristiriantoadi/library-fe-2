@@ -3,6 +3,7 @@ import Grid from "@mui/material/Grid";
 import MDBox from "components/MDBox";
 import MDButton from "components/MDButton";
 import MDTypography from "components/MDTypography";
+import Loader from "components/Util/Loader/loader";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { addDate } from "util/util";
@@ -15,10 +16,10 @@ function Borrow() {
   const [name, setName] = useState();
   const [books, setBooks] = useState([]);
   const [allBooks, setAllBooks] = useState([]);
-  const [disabled, setDisabled] = useState(true);
   const [bookTitle, setBookTitle] = useState();
   const MAX_BORROW = 3;
   const BORROW_DURATION = 3;
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const requestMembers = privateAxios.get("/admin/member");
@@ -93,13 +94,49 @@ function Borrow() {
     let allBooksCopy = [...allBooks];
 
     const index = booksCopy.indexOf(book);
-    console.log("index", index);
     if (index == -1) return;
     allBooksCopy.push(booksCopy[index]);
     booksCopy.splice(index, 1);
 
     setBooks(booksCopy);
     setAllBooks(allBooksCopy);
+  };
+
+  const resetInput = () => {
+    setMember(undefined);
+    setBooks([]);
+    setName("");
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const memberId = member["_id"];
+    const bookIds = books.map((b) => {
+      return b["_id"];
+    });
+
+    setLoading(true);
+    privateAxios
+      .post("/admin/borrowing/" + memberId, bookIds)
+      .then((response) => {
+        console.log("success");
+        toast.success("Berhasil menambahkan data peminjaman", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+        setLoading(false);
+        resetInput();
+      })
+      .catch((error) => {
+        setLoading(false);
+        return;
+      });
   };
 
   return (
@@ -121,7 +158,7 @@ function Borrow() {
                 Peminjaman
               </MDTypography>
             </MDBox>
-            <form style={{ width: "70%", minWidth: "300px" }}>
+            <form onSubmit={handleSubmit} style={{ width: "70%", minWidth: "300px" }}>
               <MDBox mb={3} px={1}>
                 <MDBox mb={3}>
                   <MDTypography variant="h5" mb={1}>
@@ -129,7 +166,9 @@ function Borrow() {
                   </MDTypography>
                   <div style={{ display: "flex", alignItems: "center" }}>
                     <input
+                      required
                       list="members"
+                      value={name}
                       placeholder="Nama Anggota"
                       style={{ width: "300px", height: "40px" }}
                       onChange={(e) => setName(e.target.value)}
@@ -242,8 +281,8 @@ function Borrow() {
               )}
               {member && (
                 <div style={{ display: "flex", justifyContent: "flex-end" }}>
-                  <MDButton disabled={books.length == 0} color="info">
-                    Submit
+                  <MDButton type="submit" disabled={books.length == 0} color="info">
+                    {loading === true ? <Loader></Loader> : "Submit"}
                   </MDButton>
                 </div>
               )}
