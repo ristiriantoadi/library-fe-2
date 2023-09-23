@@ -197,7 +197,12 @@ function Borrow() {
                         return <option key={index} value={`${m.name} (${m.noId})`} />;
                       })}
                     </datalist>
-                    <MDButton onClick={findMember} style={{ marginLeft: "5px" }} color="info">
+                    <MDButton
+                      disabled={name === "" || name === undefined}
+                      onClick={findMember}
+                      style={{ marginLeft: "5px" }}
+                      color="info"
+                    >
                       {loadingFetchBooks == true ? <Loader /> : "Cari Anggota"}
                     </MDButton>
                   </div>
