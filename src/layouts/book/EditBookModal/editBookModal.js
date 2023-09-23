@@ -23,6 +23,7 @@ function EditBookModal(props) {
     setOpen: PropTypes.func.isRequired,
     book: PropTypes.object.isRequired,
     fetchData: PropTypes.func.isRequired,
+    categories: PropTypes.arrayOf(PropTypes.string),
   };
   const [authors, setAuthors] = useState([""]);
   const [publicationYear, setPublicationYear] = useState(2000);
@@ -280,10 +281,13 @@ function EditBookModal(props) {
                       style={{ height: "44px" }}
                       label="category"
                     >
-                      <MenuItem value="literature">Sastra</MenuItem>
-                      <MenuItem value="science">Sains</MenuItem>
-                      <MenuItem value="tech">Teknologi</MenuItem>
-                      <MenuItem value="history">Sejarah</MenuItem>
+                      {props.categories.map((category, index) => {
+                        return (
+                          <MenuItem key={index} value={category}>
+                            {category}
+                          </MenuItem>
+                        );
+                      })}
                     </Select>
                   </FormControl>
                 </MDBox>

@@ -22,6 +22,7 @@ function AddBookModal(props) {
     open: PropTypes.bool.isRequired,
     setOpen: PropTypes.func.isRequired,
     fetchData: PropTypes.func.isRequired,
+    categories: PropTypes.arrayOf(PropTypes.string),
   };
   const [authors, setAuthors] = useState([""]);
   const [publicationYear, setPublicationYear] = useState(2000);
@@ -79,6 +80,11 @@ function AddBookModal(props) {
     // free memory when ever this component is unmounted
     return () => URL.revokeObjectURL(objectUrl);
   }, [cover]);
+
+  useEffect(() => {
+    if (props.categories.length == 0) return;
+    setCategory(props.categories[0]);
+  }, [props.categories]);
 
   const resetInput = () => {
     setAuthors([""]);
@@ -147,7 +153,6 @@ function AddBookModal(props) {
     resetInput();
     props.fetchData();
   };
-
   return (
     <Modal
       open={props.open}
@@ -300,10 +305,13 @@ function AddBookModal(props) {
                       style={{ height: "44px" }}
                       label="category"
                     >
-                      <MenuItem value="literature">Sastra</MenuItem>
-                      <MenuItem value="science">Sains</MenuItem>
-                      <MenuItem value="tech">Teknologi</MenuItem>
-                      <MenuItem value="history">Sejarah</MenuItem>
+                      {props.categories.map((category, index) => {
+                        return (
+                          <MenuItem key={index} value={category}>
+                            {category}
+                          </MenuItem>
+                        );
+                      })}
                     </Select>
                   </FormControl>
                 </MDBox>

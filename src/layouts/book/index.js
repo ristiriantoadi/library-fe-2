@@ -32,6 +32,8 @@ function Book() {
   const [openEditBook, setOpenEditBook] = useState(false);
   const [index, setIndex] = useState(0);
   const [books, setBooks] = useState([{}]);
+  // let categories = [];
+  const [categories, setCategories] = useState([]);
 
   const fetchData = async () => {
     privateAxios
@@ -135,8 +137,20 @@ function Book() {
     );
   };
 
+  const fetchCategory = () => {
+    privateAxios
+      .get("/admin/book/categories")
+      .then((response) => {
+        setCategories(response.data);
+      })
+      .catch((error) => {
+        return;
+      });
+  };
+
   useEffect(() => {
     fetchData();
+    fetchCategory();
   }, []);
 
   return (
@@ -145,6 +159,7 @@ function Book() {
         open={openAddBook}
         fetchData={fetchData}
         setOpen={setOpenAddBook}
+        categories={categories}
       ></AddBookModal>
       <InfoBookModal open={openInfo} setOpen={setOpenInfo} book={books[index]} />
       <EditBookModal
@@ -152,6 +167,7 @@ function Book() {
         open={openEditBook}
         setOpen={setOpenEditBook}
         book={books[index]}
+        categories={categories}
       />
       <Grid container spacing={6}>
         <Grid item xs={12}>
