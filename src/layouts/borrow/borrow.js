@@ -86,6 +86,13 @@ function Borrow() {
     setBookTitle("");
   };
 
+  const deleteBook = (index) => {
+    console.log("index", index);
+    let booksCopy = [...books];
+    booksCopy.splice(index, 1);
+    setBooks(booksCopy);
+  };
+
   return (
     <MDBox pt={6} pb={3}>
       <Grid container spacing={6}>
@@ -198,7 +205,7 @@ function Borrow() {
               {member && (
                 <MDBox>
                   {books.map((b, index) => {
-                    return <BookCard book={b} key={index}></BookCard>;
+                    return <BookCard deleteBook={deleteBook} book={b} key={index}></BookCard>;
                   })}
                 </MDBox>
               )}
