@@ -118,6 +118,7 @@ function Borrow() {
 
     setBooks(booksCopy);
     setAllBooks(allBooksCopy);
+    setRemainingSlot((remainingSlot) => remainingSlot + 1);
   };
 
   const resetInput = () => {
