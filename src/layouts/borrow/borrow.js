@@ -192,7 +192,7 @@ function Borrow() {
               )}
               {member && (
                 <div style={{ display: "flex", justifyContent: "flex-end" }}>
-                  <MDButton disabled={disabled} color="info">
+                  <MDButton disabled={books.length == 0} color="info">
                     Submit
                   </MDButton>
                 </div>
