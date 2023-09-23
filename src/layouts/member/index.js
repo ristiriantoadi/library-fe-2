@@ -72,7 +72,11 @@ function member() {
     privateAxios
       .get("/admin/member")
       .then((response) => {
-        setMembers(response.data.content);
+        if (response.data.content.length == 0) {
+          setMembers([{}]);
+        } else {
+          setMembers(response.data.content);
+        }
         let data = [];
         response.data.content.forEach((element, index) => {
           data.push({
