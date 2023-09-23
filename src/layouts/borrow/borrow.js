@@ -20,28 +20,39 @@ function Borrow() {
   const MAX_BORROW = 3;
   const BORROW_DURATION = 3;
   const [loading, setLoading] = useState(false);
+  const [loadingFetchBooks, setLoadingFetchBooks] = useState(false);
 
   useEffect(() => {
     const requestMembers = privateAxios.get("/admin/member");
-    const requestBooks = privateAxios.get("/admin/book");
-    Promise.all([requestMembers, requestBooks])
+    // const requestBooks = privateAxios.get("/admin/book");
+    Promise.all([requestMembers])
       .then((responses) => {
         const responseMembers = responses[0];
-        const responseBooks = responses[1];
-
         setMembers(responseMembers.data.content);
-        setAllBooks(responseBooks.data);
       })
       .catch((error) => {
         return;
       });
   }, []);
 
+  const fetchUnborrowedBooks = (member) => {
+    setLoadingFetchBooks(true);
+    privateAxios
+      .get("/admin/book/unborrowed/" + member["_id"])
+      .then((response) => {
+        setAllBooks(response.data);
+      })
+      .catch((error) => {});
+    setLoadingFetchBooks(false);
+  };
+
   const findMember = () => {
     let found = false;
+    let member;
     members.forEach((m) => {
       if (`${m.name} (${m.noId})` === name) {
         setMember(m);
+        member = m;
         found = true;
         return;
       }
@@ -57,6 +68,9 @@ function Borrow() {
         progress: undefined,
         theme: "colored",
       });
+    else {
+      fetchUnborrowedBooks(member);
+    }
   };
 
   const addBook = () => {
@@ -179,7 +193,7 @@ function Borrow() {
                       })}
                     </datalist>
                     <MDButton onClick={findMember} style={{ marginLeft: "5px" }} color="info">
-                      Cari Anggota
+                      {loadingFetchBooks == true ? <Loader /> : "Cari Anggota"}
                     </MDButton>
                   </div>
                 </MDBox>
