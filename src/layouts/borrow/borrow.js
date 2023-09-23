@@ -86,11 +86,18 @@ function Borrow() {
     setBookTitle("");
   };
 
-  const deleteBook = (index) => {
-    console.log("index", index);
+  const deleteBook = (book) => {
     let booksCopy = [...books];
+    let allBooksCopy = [...allBooks];
+
+    const index = booksCopy.indexOf(book);
+    console.log("index", index);
+    if (index == -1) return;
+    allBooksCopy.push(booksCopy[index]);
     booksCopy.splice(index, 1);
+
     setBooks(booksCopy);
+    setAllBooks(allBooksCopy);
   };
 
   return (
@@ -205,7 +212,7 @@ function Borrow() {
               {member && (
                 <MDBox>
                   {books.map((b, index) => {
-                    return <BookCard deleteBook={deleteBook} book={b} key={index}></BookCard>;
+                    return <BookCard key={index} deleteBook={deleteBook} book={b}></BookCard>;
                   })}
                 </MDBox>
               )}

@@ -10,7 +10,6 @@ function BookCard(props) {
   BookCard.propTypes = {
     book: PropTypes.object.isRequired,
     deleteBook: PropTypes.func.isRequired,
-    key: PropTypes.number,
   };
   return (
     <Card style={{ marginBottom: "20px" }}>
@@ -56,7 +55,7 @@ function BookCard(props) {
           md={2}
         >
           <DeleteIcon
-            onClick={(e) => props.deleteBook(props.key)}
+            onClick={(e) => props.deleteBook(props.book)}
             className={style.delete}
             style={{ width: "40px", height: "40px" }}
           ></DeleteIcon>
