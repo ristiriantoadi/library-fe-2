@@ -22,23 +22,26 @@ function InfoModal(props) {
       <MDBox
         bgColor="white"
         style={{
+          overflow: "scroll",
           position: "absolute",
           top: "50%",
           left: "50%",
           transform: "translate(-50%, -50%)",
           width: "70%",
+          maxHeight: "90vh",
           p: 4,
         }}
+        borderRadius="lg"
       >
         <MDBox
-          mx={2}
+          // mx={2}
           py={3}
           px={2}
-          mt={-3}
+          // mt={3}
           mb={3}
           variant="gradient"
           bgColor="info"
-          borderRadius="lg"
+          // borderRadius="lg"
           coloredShadow="info"
         >
           <MDTypography id="modal-modal-title" variant="h6" color="white">
@@ -90,7 +93,7 @@ function InfoModal(props) {
             <img src={props.member.profilePicture} style={{ maxWidth: "300px" }}></img>
           </Grid>
         </Grid>
-        <BasicTabs></BasicTabs>
+        <BasicTabs member={props.member}></BasicTabs>
       </MDBox>
     </Modal>
   );
