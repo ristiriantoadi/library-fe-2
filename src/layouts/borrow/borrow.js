@@ -58,14 +58,26 @@ function Borrow() {
 
   const addBook = () => {
     let booksCopy = [...books];
+    let found = false;
     allBooks.forEach((b) => {
       if (`${b.title} (${b.isbn})` === bookTitle) {
-        // setMember(m);
         booksCopy.push(b);
         setBooks(booksCopy);
+        found = true;
         return;
       }
     });
+    if (!found)
+      toast.error("Buku tidak ditemukan", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
   };
 
   return (
