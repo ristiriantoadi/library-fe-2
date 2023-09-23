@@ -4,6 +4,7 @@ import MDBox from "components/MDBox";
 import MDButton from "components/MDButton";
 import MDTypography from "components/MDTypography";
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import { privateAxios } from "UtilRequests/util-axios";
 import BookCard from "./components/bookCard";
 
@@ -15,6 +16,7 @@ function Borrow() {
   const [allBooks, setAllBooks] = useState([]);
   const [disabled, setDisabled] = useState(true);
   const [bookTitle, setBookTitle] = useState();
+  const MAX_BORROW = 3;
 
   useEffect(() => {
     const requestMembers = privateAxios.get("/admin/member");
@@ -33,12 +35,25 @@ function Borrow() {
   }, []);
 
   const findMember = () => {
+    let found = false;
     members.forEach((m) => {
       if (`${m.name} (${m.noId})` === name) {
         setMember(m);
+        found = true;
         return;
       }
     });
+    if (!found)
+      toast.error("Anggota tidak ditemukan", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
   };
 
   const addBook = () => {
