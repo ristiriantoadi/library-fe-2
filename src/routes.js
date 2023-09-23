@@ -41,11 +41,11 @@ import Configuration from "layouts/configuration";
 import Dashboard from "layouts/dashboard";
 import Logout from "layouts/logout";
 import Member from "layouts/member";
-import Notifications from "layouts/notifications";
 import Profile from "layouts/profile";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
+import Borrow from "layouts/borrow/borrow";
 
 const routes = [
   {
@@ -77,8 +77,8 @@ const routes = [
     name: "Peminjaman",
     key: "checkout",
     icon: <Icon fontSize="small">bookmark</Icon>,
-    route: "/notifications",
-    component: <Notifications />,
+    route: "/peminjaman",
+    component: <Borrow />,
   },
   {
     type: "collapse",
