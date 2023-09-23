@@ -146,7 +146,6 @@ function Borrow() {
     privateAxios
       .post("/admin/borrowing/" + memberId, bookIds)
       .then((response) => {
-        console.log("success");
         toast.success("Berhasil menambahkan data peminjaman", {
           position: "top-right",
           autoClose: 3000,
@@ -186,7 +185,7 @@ function Borrow() {
               </MDTypography>
             </MDBox>
             <form onSubmit={handleSubmit} style={{ width: "70%", minWidth: "300px" }}>
-              <MDBox mb={3} px={1}>
+              <MDBox mb={3}>
                 <MDBox mb={3}>
                   <MDTypography variant="h5" mb={1}>
                     Anggota
@@ -197,7 +196,7 @@ function Borrow() {
                       list="members"
                       value={name}
                       placeholder="Nama Anggota"
-                      style={{ width: "300px", height: "40px" }}
+                      style={{ width: "300px", height: "40px", paddingLeft: "5px" }}
                       onChange={(e) => setName(e.target.value)}
                     ></input>
                     <datalist id="members">
@@ -258,8 +257,8 @@ function Borrow() {
                   <div style={{ display: "flex", alignItems: "center" }}>
                     <input
                       list="books"
-                      placeholder="Judul Buku"
-                      style={{ width: "300px", height: "40px", marginTop: "5px" }}
+                      placeholder="Judul"
+                      style={{ width: "300px", height: "40px", paddingLeft: "5px" }}
                       value={bookTitle}
                       onChange={(e) => setBookTitle(e.target.value)}
                     ></input>
