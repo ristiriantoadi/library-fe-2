@@ -5,6 +5,7 @@ import MDButton from "components/MDButton";
 import MDTypography from "components/MDTypography";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import { addDate } from "util/util";
 import { privateAxios } from "UtilRequests/util-axios";
 import BookCard from "./components/bookCard";
 
@@ -17,6 +18,7 @@ function Borrow() {
   const [disabled, setDisabled] = useState(true);
   const [bookTitle, setBookTitle] = useState();
   const MAX_BORROW = 3;
+  const BORROW_DURATION = 3;
 
   useEffect(() => {
     const requestMembers = privateAxios.get("/admin/member");
@@ -215,6 +217,28 @@ function Borrow() {
                     return <BookCard key={index} deleteBook={deleteBook} book={b}></BookCard>;
                   })}
                 </MDBox>
+              )}
+              {member && books.length > 0 && (
+                <Grid mb={1} container spacing={3}>
+                  <Grid item xs={6}>
+                    <MDBox>
+                      <MDTypography variant="body2" fontWeight="bold">
+                        Durasi Peminjaman
+                      </MDTypography>
+                      <MDTypography variant="body2">{BORROW_DURATION} hari</MDTypography>
+                    </MDBox>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <MDBox>
+                      <MDTypography variant="body2" fontWeight="bold">
+                        Jadwal Pengembalian
+                      </MDTypography>
+                      <MDTypography variant="body2">
+                        {addDate(new Date(), BORROW_DURATION).toDateString()}
+                      </MDTypography>
+                    </MDBox>
+                  </Grid>
+                </Grid>
               )}
               {member && (
                 <div style={{ display: "flex", justifyContent: "flex-end" }}>
