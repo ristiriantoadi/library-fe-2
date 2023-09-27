@@ -233,7 +233,7 @@ function EditMemberModal(props) {
                       src={preview}
                       style={{ margin: "auto" }}
                       height="333px"
-                      width="250px"
+                      // width="250px"
                     ></img>
                   </Grid>
                   <Grid item>

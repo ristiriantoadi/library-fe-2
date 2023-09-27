@@ -91,7 +91,7 @@ function InfoModal(props) {
               </MDBox>
             </Grid>
             <Grid item xs={12} sm={12} md={12} lg={12} xl={4} pb={2}>
-              <img src={props.member.profilePicture} style={{ maxWidth: "300px" }}></img>
+              <img src={props.member.profilePicture} style={{ width: "300px" }}></img>
             </Grid>
           </Grid>
           <BasicTabs member={props.member}></BasicTabs>
