@@ -67,7 +67,7 @@ function AddMemberModal(props) {
     return () => URL.revokeObjectURL(objectUrl);
   }, [profilePicture]);
 
-  useEffect(() => {
+  const fetchSequenceNumber = () => {
     privateAxios
       .get("/admin/member/sequence_number")
       .then(function (response) {
@@ -77,6 +77,10 @@ function AddMemberModal(props) {
         // handle error
         console.log(error);
       });
+  };
+
+  useEffect(() => {
+    fetchSequenceNumber();
   }, []);
 
   const resetInput = () => {
@@ -126,6 +130,7 @@ function AddMemberModal(props) {
     });
     resetInput();
     props.postSuccess();
+    fetchSequenceNumber();
   };
 
   const handleSubmit = async (e) => {

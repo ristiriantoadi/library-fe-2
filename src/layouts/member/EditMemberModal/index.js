@@ -147,7 +147,7 @@ function EditMemberModal(props) {
               Edit Anggota
             </MDTypography>
           </MDBox>
-          <MDBox mx={5}>
+          <MDBox style={{ overflow: "scroll", maxHeight: "70vh" }} mx={5}>
             <Grid container spacing={2}>
               <Grid item xs={12} md={6}>
                 <MDBox mb={3}>
@@ -226,12 +226,12 @@ function EditMemberModal(props) {
                   />
                 </MDBox>
               </Grid>
-              <Grid item xs={12} md={6}>
+              <Grid item xs={12} xl={6}>
                 <Grid container flexDirection="column" alignItems="center">
                   <Grid item style={{ flex: "1" }}>
                     <img
                       src={preview}
-                      style={{ margin: "auto" }}
+                      style={{ margin: "auto", maxWidth: "350px" }}
                       height="333px"
                       // width="250px"
                     ></img>
