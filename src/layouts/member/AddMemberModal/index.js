@@ -29,6 +29,8 @@ function AddMemberModal(props) {
   const [email, setEmail] = useState();
   const [phoneNumber, setPhoneNumber] = useState();
   const [loading, setLoading] = useState(false);
+  // let sequenceNumber;
+  const [sequenceNumber, setSequenceNumber] = useState();
 
   AddMemberModal.propTypes = {
     open: PropTypes.bool.isRequired,
@@ -64,6 +66,21 @@ function AddMemberModal(props) {
     // free memory when ever this component is unmounted
     return () => URL.revokeObjectURL(objectUrl);
   }, [profilePicture]);
+
+  useEffect(() => {
+    privateAxios
+      .get("/admin/member/sequence_number")
+      .then(function (response) {
+        // handle success
+        // sequenceNumber = response.data.sequenceNumber;
+        // console.log("sequence number", sequenceNumber);
+        setSequenceNumber(response.data.sequenceNumber);
+      })
+      .catch(function (error) {
+        // handle error
+        console.log(error);
+      });
+  }, []);
 
   const resetInput = () => {
     setName();
@@ -132,6 +149,19 @@ function AddMemberModal(props) {
 
     addMember();
   };
+
+  const getInitials = (inputString) => {
+    const words = inputString.split(" ");
+    const initials = words.map((word) => word.charAt(0).toUpperCase());
+    return initials.join("");
+  };
+
+  useEffect(() => {
+    if (name == "" || name == undefined) return;
+
+    const initial = getInitials(name);
+    setNoId(`${new Date().getFullYear()}-${initial}-${sequenceNumber}`);
+  }, [name]);
 
   return (
     <Modal
