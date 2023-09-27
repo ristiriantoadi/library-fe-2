@@ -13,8 +13,11 @@ function BookCard(props) {
   };
   return (
     <Card style={{ marginBottom: "20px" }}>
-      <Grid container p={2} mx={3}>
-        <Grid item xs={12} md={6}>
+      <Grid container p={1} mx={1}>
+        <Grid item xs={12} style={{ marginRight: "10px" }} lg={2}>
+          <img height={150} src={props.book.cover}></img>
+        </Grid>
+        <Grid item xs={12} lg={4}>
           <MDBox mb={1}>
             <MDTypography variant="body2" fontWeight="bold">
               Judul
@@ -34,7 +37,7 @@ function BookCard(props) {
             })}
           </MDBox>
         </Grid>
-        <Grid item xs={12} md={4}>
+        <Grid item xs={12} lg={4}>
           <MDBox mb={1}>
             <MDTypography variant="body2" fontWeight="bold">
               ISBN
@@ -52,7 +55,7 @@ function BookCard(props) {
           style={{ display: "flex", alignItems: "center", justifyContent: "flex-start" }}
           item
           xs={12}
-          md={2}
+          lg={1}
         >
           <DeleteIcon
             onClick={(e) => props.deleteBook(props.book)}
