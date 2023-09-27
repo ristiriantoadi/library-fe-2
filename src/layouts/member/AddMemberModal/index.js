@@ -190,6 +190,7 @@ function AddMemberModal(props) {
                     ID Anggota
                   </MDTypography>
                   <MDInput
+                    disabled
                     type="text"
                     value={noId}
                     onChange={(e) => {
