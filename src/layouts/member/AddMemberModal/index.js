@@ -17,6 +17,7 @@ import peopleImage from "assets/images/people-image.webp";
 import Loader from "components/Util/Loader/loader";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import { getInitials } from "util/util";
 import { privateAxios } from "UtilRequests/util-axios";
 
 function AddMemberModal(props) {
@@ -150,12 +151,6 @@ function AddMemberModal(props) {
     }
 
     addMember();
-  };
-
-  const getInitials = (inputString) => {
-    const words = inputString.split(" ");
-    const initials = words.map((word) => word.charAt(0).toUpperCase());
-    return initials.join("");
   };
 
   useEffect(() => {

@@ -17,6 +17,7 @@ import peopleImage from "assets/images/people-image.webp";
 import Loader from "components/Util/Loader/loader";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import { getInitials } from "util/util";
 import { privateAxios } from "UtilRequests/util-axios";
 
 function EditMemberModal(props) {
@@ -113,6 +114,14 @@ function EditMemberModal(props) {
     props.editSuccess();
   };
 
+  useEffect(() => {
+    if (name == "" || name == undefined) return;
+    const year = noId.split("-")[0];
+    const initial = getInitials(name);
+    const sequenceNumber = noId.split("-")[2];
+    setNoId(`${year}-${initial}-${sequenceNumber}`);
+  }, [name]);
+
   return (
     <Modal
       open={props.open}
@@ -170,6 +179,7 @@ function EditMemberModal(props) {
                   </MDTypography>
                   <MDInput
                     type="text"
+                    disabled
                     required
                     fullWidth
                     onChange={(e) => {
