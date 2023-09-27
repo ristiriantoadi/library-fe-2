@@ -71,9 +71,6 @@ function AddMemberModal(props) {
     privateAxios
       .get("/admin/member/sequence_number")
       .then(function (response) {
-        // handle success
-        // sequenceNumber = response.data.sequenceNumber;
-        // console.log("sequence number", sequenceNumber);
         setSequenceNumber(response.data.sequenceNumber);
       })
       .catch(function (error) {
@@ -173,7 +170,6 @@ function AddMemberModal(props) {
       <form onSubmit={handleSubmit}>
         <MDBox
           bgColor="white"
-          // py={3
           style={{
             position: "absolute",
             top: "50%",
@@ -198,9 +194,9 @@ function AddMemberModal(props) {
               Tambah Anggota
             </MDTypography>
           </MDBox>
-          <MDBox mx={5}>
+          <MDBox style={{ overflow: "scroll", maxHeight: "70vh" }} mx={5}>
             <Grid container spacing={2}>
-              <Grid item xs={12} md={6}>
+              <Grid item xs={12} xl={6}>
                 <MDBox mb={3}>
                   <MDTypography mb={1} variant="body2" fontWeight="bold">
                     Nama
@@ -278,14 +274,14 @@ function AddMemberModal(props) {
                   />
                 </MDBox>
               </Grid>
-              <Grid item xs={12} md={6}>
+              <Grid item xs={12} xl={6}>
                 <Grid container flexDirection="column" alignItems="center">
-                  <Grid item style={{ flex: "1" }}>
+                  <Grid item style={{ flex: "1", overflowX: "auto" }}>
                     <img
                       src={preview}
                       style={{ margin: "auto" }}
                       height="333px"
-                      width="250px"
+                      // width="250px"
                     ></img>
                   </Grid>
                   <Grid item>
