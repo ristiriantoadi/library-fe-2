@@ -6,10 +6,15 @@ import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
+import PropTypes from "prop-types";
+import style from "./style.module.css";
 
-function ReturnBookCard() {
+function ReturnBookCard(props) {
+  ReturnBookCard.propTypes = {
+    book: PropTypes.object,
+  };
   return (
-    <Card style={{ marginBottom: "20px" }}>
+    <Card style={{ marginBottom: "20px", padding: "10px 5px" }}>
       <Grid container spacing={1}>
         <Grid xs={10} item p={1} mx={1} spacing={3} container>
           <Grid item xs={6}>
@@ -17,13 +22,19 @@ function ReturnBookCard() {
               <MDTypography variant="body2" fontWeight="bold">
                 Judul
               </MDTypography>
-              <MDTypography variant="body2">Dilarang Mencintai Bunga-bunga</MDTypography>
+              <MDTypography variant="body2">{props.book.title}</MDTypography>
             </MDBox>
             <MDBox mb={1}>
               <MDTypography variant="body2" fontWeight="bold">
-                Pengarang
+                Penulis
               </MDTypography>
-              <MDTypography variant="body2">Kuntowijoyo</MDTypography>
+              {props.book.author.split(",").map((author, index) => {
+                return (
+                  <MDTypography key={index} variant="body2">
+                    {author}
+                  </MDTypography>
+                );
+              })}
             </MDBox>
             <MDBox mb={1}>
               <MDTypography variant="body2" fontWeight="bold">
@@ -56,13 +67,13 @@ function ReturnBookCard() {
               <MDTypography variant="body2" fontWeight="bold">
                 ISBN
               </MDTypography>
-              <MDTypography variant="body2">1221122</MDTypography>
+              <MDTypography variant="body2">{props.book.isbn}</MDTypography>
             </MDBox>
             <MDBox mb={1}>
               <MDTypography variant="body2" fontWeight="bold">
                 Penerbit
               </MDTypography>
-              <MDTypography variant="body2">Sinar Harapan</MDTypography>
+              <MDTypography variant="body2">{props.book.publisher}</MDTypography>
             </MDBox>
             <MDBox mb={1}>
               <MDTypography variant="body2" fontWeight="bold">
@@ -90,9 +101,9 @@ function ReturnBookCard() {
             </MDBox>
           </Grid>
         </Grid>
-        <Grid style={{ display: "flex", alignItems: "center" }} xs={1} item>
+        <Grid className={style.checkBoxGrid} item>
           <input
-            style={{ width: "30px", height: "30px" }}
+            style={{ minWidth: "30px", minHeight: "30px" }}
             type="checkbox"
             label="Text"
             value="John Smith"

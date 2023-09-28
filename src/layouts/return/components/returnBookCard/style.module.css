@@ -1,0 +1,14 @@
+.checkBoxGrid{
+    display: flex;
+    justify-Content: center;
+    align-items: center,
+}
+
+@media(max-width: 785px){
+    .checkBoxGrid{
+        width: 100%;
+        display: flex;
+        justify-Content: flex-end;
+        padding-right: 50px;
+    }
+}

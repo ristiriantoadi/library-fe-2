@@ -6,7 +6,7 @@ import MDTypography from "components/MDTypography";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { privateAxios } from "UtilRequests/util-axios";
-import ReturnBookCard from "./ReturnBookCard";
+import ReturnBookCard from "./components/returnBookCard/ReturnBookCard";
 
 function Return() {
   const [name, setName] = useState();
@@ -24,7 +24,6 @@ function Return() {
           return borrowing["book"];
         });
         setBorrowedBooks(borrowedBooks);
-        console.log("borrowed books", borrowedBooks);
       })
       .catch((error) => {});
   };
@@ -154,7 +153,9 @@ function Return() {
                   <MDTypography variant="h5" mb={2}>
                     Buku
                   </MDTypography>
-                  <ReturnBookCard></ReturnBookCard>
+                  {borrowedBooks.map((book, index) => {
+                    return <ReturnBookCard key={index} book={book}></ReturnBookCard>;
+                  })}
                 </MDBox>
               )}
               {member && (
