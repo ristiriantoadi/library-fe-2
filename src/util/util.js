@@ -8,3 +8,10 @@ export const getInitials = (inputString) => {
   const initials = words.map((word) => word.charAt(0).toUpperCase());
   return initials.join("");
 };
+
+export const validatePhoneNumber = (phoneNumber) => {
+  const pattern = /^(0|\+62)\d{11}$/;
+  const res = pattern.test(phoneNumber);
+  console.log("res", res);
+  return pattern.test(phoneNumber);
+};
