@@ -86,21 +86,12 @@ function Return() {
       if (bookCopy["borrowId"] === book["borrowId"]) {
         bookCopy = book;
       }
+      if (bookCopy.checked == true) setDisabled(false);
       return bookCopy;
     });
     calculateTotalFee(borrowedBooksCopy);
     // setBorrowedBooks(borrowedBooksCopy);
   };
-
-  useEffect(() => {
-    let disabled = true;
-    borrowedBooks.forEach((book) => {
-      if (book.checked === true) {
-        disabled = false;
-      }
-    });
-    setDisabled(disabled);
-  }, [borrowedBooks]);
 
   return (
     <MDBox pt={6} pb={3}>
