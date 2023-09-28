@@ -26,6 +26,7 @@ function Return() {
           borrowing["book"]["borrowTime"] = borrowing["createTime"];
           borrowing["book"]["borrowId"] = borrowing["_id"];
           borrowing["book"]["userId"] = borrowing["userId"];
+          borrowing["book"]["bookId"] = borrowing["book"]["_id"];
           return borrowing["book"];
         });
         setBorrowedBooks(borrowedBooks);
@@ -72,7 +73,6 @@ function Return() {
   const calculateTotalFee = (books) => {
     let totalFee = 0;
     books.forEach((book) => {
-      console.log("book", book);
       if (book.checked === true) {
         totalFee += book.totalFee;
       }
@@ -91,7 +91,50 @@ function Return() {
       return bookCopy;
     });
     calculateTotalFee(borrowedBooksCopy);
-    // setBorrowedBooks(borrowedBooksCopy);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    let data = [];
+    borrowedBooks.forEach((book) => {
+      if (book.checked === true) {
+        let fees = [];
+        if (book.lateFee > 0) {
+          fees.push({ feeType: "Keterlambatan", amount: book.lateFee });
+        }
+        if (book.lostDamageFee > 0) {
+          if (book.condition == "Hilang") {
+            fees.push({ feeType: "Buku Hilang", amount: book.lostDamageFee });
+          } else {
+            fees.push({ feeType: "Buku Rusak", amount: book.lostDamageFee });
+          }
+        }
+        data.push({
+          borrowId: book["borrowId"],
+          bookId: book["bookId"],
+          fees: fees,
+          status: book.condition == "Hilang" ? "Hilang" : "Telah Dikembalikan",
+        });
+      }
+    });
+    privateAxios
+      .put(`/admin/borrowing/${member["_id"]}/return`, data)
+      .then((response) => {
+        toast.success("Berhasil mengembalikan buku", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+        setMember(undefined);
+        setBorrowedBooks([]);
+        setTotalFee(0);
+      })
+      .catch((error) => {});
   };
 
   return (
@@ -113,7 +156,7 @@ function Return() {
                 Pengembalian
               </MDTypography>
             </MDBox>
-            <form style={{ width: "70%", minWidth: "300px" }}>
+            <form onSubmit={handleSubmit} style={{ width: "70%", minWidth: "300px" }}>
               <MDBox mb={3}>
                 <MDBox mb={3}>
                   <MDTypography variant="h5" mb={1}>

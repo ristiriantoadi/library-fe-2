@@ -62,6 +62,9 @@ function ReturnBookCard(props) {
     setLatefee(lateFee);
     setTotalFee(lateFee + lostDamageFee);
     props.book.totalFee = lateFee + lostDamageFee;
+    props.book.lateFee = lateFee;
+    props.book.lostDamageFee = lostDamageFee;
+    props.book.condition = bookCondition;
   }, [bookCondition]);
 
   useEffect(() => {
