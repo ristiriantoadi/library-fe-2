@@ -82,6 +82,7 @@ function Return() {
 
   const bookUpdated = (book) => {
     let borrowedBooksCopy = [...borrowedBooks];
+    setDisabled(true);
     borrowedBooksCopy = borrowedBooksCopy.map((bookCopy) => {
       if (bookCopy["borrowId"] === book["borrowId"]) {
         bookCopy = book;
