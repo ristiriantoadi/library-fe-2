@@ -15,3 +15,16 @@ export const validatePhoneNumber = (phoneNumber) => {
   console.log("res", res);
   return pattern.test(phoneNumber);
 };
+
+export const validateISBN = (isbn) => {
+  // Remove any hyphens or spaces from the ISBN
+  isbn = isbn.replace(/[-\s]/g, "");
+
+  // Validate ISBN-10 (with 'X' as the check digit)
+  const isbn10Pattern = /^(?:\d{9}X|\d{10})$/;
+
+  // Validate ISBN-13
+  const isbn13Pattern = /^(?:\d{13})$/;
+
+  return isbn10Pattern.test(isbn) || isbn13Pattern.test(isbn);
+};

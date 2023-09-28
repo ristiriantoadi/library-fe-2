@@ -17,7 +17,7 @@ import peopleImage from "assets/images/people-image.webp";
 import Loader from "components/Util/Loader/loader";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { getInitials } from "util/util";
+import { getInitials, validatePhoneNumber } from "util/util";
 import { privateAxios } from "UtilRequests/util-axios";
 
 function EditMemberModal(props) {
@@ -30,6 +30,7 @@ function EditMemberModal(props) {
   const [email, setEmail] = useState();
   const [phoneNumber, setPhoneNumber] = useState();
   const [loading, setLoading] = useState(false);
+  const [invalidPhoneNumber, setInvalidPhoneNumber] = useState();
 
   EditMemberModal.propTypes = {
     open: PropTypes.bool.isRequired, // Example: boolean prop
@@ -121,6 +122,16 @@ function EditMemberModal(props) {
     const sequenceNumber = noId.split("-")[2];
     setNoId(`${year}-${initial}-${sequenceNumber}`);
   }, [name]);
+
+  useEffect(() => {
+    if (phoneNumber == "" || phoneNumber == undefined) setInvalidPhoneNumber(false);
+
+    if (validatePhoneNumber(phoneNumber) == false) {
+      setInvalidPhoneNumber(true);
+    } else {
+      setInvalidPhoneNumber(false);
+    }
+  }, [phoneNumber]);
 
   return (
     <Modal
@@ -261,9 +272,18 @@ function EditMemberModal(props) {
                 </Grid>
                 <Grid item>
                   <MDBox mb={3}>
-                    <MDTypography mb={1} variant="body2" fontWeight="bold">
-                      Nomor Telepon
-                    </MDTypography>
+                    <div style={{ display: "flex" }}>
+                      <MDTypography mb={1} mr={1} variant="body2" fontWeight="bold">
+                        Nomor Telepon
+                      </MDTypography>
+                      <MDTypography
+                        mb={1}
+                        style={{ display: "flex", alignItems: "center", color: "red" }}
+                        variant="caption"
+                      >
+                        {invalidPhoneNumber && "(Nomor tidak valid)"}
+                      </MDTypography>
+                    </div>
                     <MDInput
                       value={phoneNumber}
                       onChange={(e) => setPhoneNumber(e.target.value)}
