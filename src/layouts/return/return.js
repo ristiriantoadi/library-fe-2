@@ -157,6 +157,19 @@ function Return() {
                   <ReturnBookCard></ReturnBookCard>
                 </MDBox>
               )}
+              {member && (
+                <div
+                  style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}
+                >
+                  <MDBox>
+                    <MDTypography variant="h4">Total Denda</MDTypography>
+                    <MDTypography variant="body">Rp. 34.000</MDTypography>
+                  </MDBox>
+                  <MDButton style={{ height: "40px" }} type="submit" color="info">
+                    Konfirmasi
+                  </MDButton>
+                </div>
+              )}
             </form>
           </Card>
         </Grid>

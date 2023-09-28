@@ -11,7 +11,7 @@ function ReturnBookCard() {
   return (
     <Card style={{ marginBottom: "20px" }}>
       <Grid container spacing={1}>
-        <Grid xs={10} item p={1} mx={1} spacing={2} container>
+        <Grid xs={10} item p={1} mx={1} spacing={3} container>
           <Grid item xs={6}>
             <MDBox mb={1}>
               <MDTypography variant="body2" fontWeight="bold">
@@ -38,11 +38,11 @@ function ReturnBookCard() {
               <MDTypography variant="body2">3 hari</MDTypography>
             </MDBox>
             <MDBox mb={1}>
-              <MDTypography variant="body2" fontWeight="bold">
+              <MDTypography variant="body2" mb={1} fontWeight="bold">
                 Kondisi Buku
               </MDTypography>
               <FormControl fullWidth>
-                <InputLabel>Kondisi Buku</InputLabel>
+                <InputLabel>Kondisi</InputLabel>
                 <Select value="Baik" style={{ height: "44px" }} label="category">
                   <MenuItem value="Baik">Baik</MenuItem>
                   <MenuItem value="Rusak">Rusak</MenuItem>
