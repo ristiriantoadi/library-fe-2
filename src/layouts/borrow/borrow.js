@@ -268,7 +268,10 @@ function Borrow() {
                     </datalist>
                     <MDButton
                       disabled={
-                        books.length == MAX_BORROW || bookTitle == undefined || bookTitle == ""
+                        books.length == MAX_BORROW ||
+                        bookTitle == undefined ||
+                        bookTitle == "" ||
+                        remainingSlot == 0
                       }
                       onClick={addBook}
                       style={{ marginLeft: "5px" }}
