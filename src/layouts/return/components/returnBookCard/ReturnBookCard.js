@@ -7,12 +7,59 @@ import Select from "@mui/material/Select";
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import PropTypes from "prop-types";
+import { useEffect, useState } from "react";
+import { addDate, dateDifference, getDate } from "util/util";
+import {
+  BORROW_DURATION,
+  DAMAGE_BOOK_FEE,
+  LATE_FEE_PER_DAY,
+  LOST_BOOK_FEE,
+} from "util/util_constant";
 import style from "./style.module.css";
 
 function ReturnBookCard(props) {
   ReturnBookCard.propTypes = {
     book: PropTypes.object,
   };
+  const [lateDays, setLateDays] = useState();
+  const [lateFee, setLatefee] = useState();
+  const [lostDamageFee, setLostDamageFee] = useState();
+  const [totalFee, setTotalFee] = useState();
+  const [bookCondition, setBookCondition] = useState("Baik");
+
+  const calculateLateDays = () => {
+    let difference = dateDifference(
+      new Date(getDate(new Date())),
+      new Date(getDate(addDate(new Date(props.book.borrowTime), BORROW_DURATION)))
+    );
+    if (difference < 0) difference = 0;
+    return difference;
+  };
+
+  const calculateLateFee = (lateDays) => {
+    return lateDays * LATE_FEE_PER_DAY;
+  };
+
+  useEffect(() => {
+    let lostDamageFee = 0;
+    if (bookCondition === "Hilang") {
+      setLostDamageFee(LOST_BOOK_FEE);
+      lostDamageFee = LOST_BOOK_FEE;
+    } else if (bookCondition == "Rusak") {
+      setLostDamageFee(DAMAGE_BOOK_FEE);
+      lostDamageFee = DAMAGE_BOOK_FEE;
+    } else {
+      setLostDamageFee(0);
+    }
+
+    const lateDays = calculateLateDays();
+    const lateFee = calculateLateFee(lateDays);
+
+    setLateDays(lateDays);
+    setLatefee(lateFee);
+    setTotalFee(lateFee + lostDamageFee);
+  }, [bookCondition]);
+
   return (
     <Card style={{ marginBottom: "20px", padding: "10px 5px" }}>
       <Grid container spacing={1}>
@@ -40,13 +87,13 @@ function ReturnBookCard(props) {
               <MDTypography variant="body2" fontWeight="bold">
                 Durasi Peminjaman
               </MDTypography>
-              <MDTypography variant="body2">3 hari</MDTypography>
+              <MDTypography variant="body2">{BORROW_DURATION} hari</MDTypography>
             </MDBox>
             <MDBox mb={1}>
               <MDTypography variant="body2" fontWeight="bold">
                 Keterlambatan
               </MDTypography>
-              <MDTypography variant="body2">3 hari</MDTypography>
+              <MDTypography variant="body2">{lateDays} hari</MDTypography>
             </MDBox>
             <MDBox mb={1}>
               <MDTypography variant="body2" mb={1} fontWeight="bold">
@@ -54,7 +101,12 @@ function ReturnBookCard(props) {
               </MDTypography>
               <FormControl fullWidth>
                 <InputLabel>Kondisi</InputLabel>
-                <Select value="Baik" style={{ height: "44px" }} label="category">
+                <Select
+                  onChange={(e) => setBookCondition(e.target.value)}
+                  value={bookCondition}
+                  style={{ height: "44px" }}
+                  label="category"
+                >
                   <MenuItem value="Baik">Baik</MenuItem>
                   <MenuItem value="Rusak">Rusak</MenuItem>
                   <MenuItem value="Hilang">Hilang</MenuItem>
@@ -79,25 +131,27 @@ function ReturnBookCard(props) {
               <MDTypography variant="body2" fontWeight="bold">
                 Jadwal Pengembalian
               </MDTypography>
-              <MDTypography variant="body2">21 Oktober 2023</MDTypography>
+              <MDTypography variant="body2">
+                {addDate(new Date(props.book.borrowTime), BORROW_DURATION).toDateString()}
+              </MDTypography>
             </MDBox>
             <MDBox mb={1}>
               <MDTypography variant="body2" fontWeight="bold">
                 Denda
               </MDTypography>
-              <MDTypography variant="body2">Rp. 2.000</MDTypography>
+              <MDTypography variant="body2">Rp. {lateFee}</MDTypography>
             </MDBox>
             <MDBox mb={1}>
               <MDTypography variant="body2" fontWeight="bold">
                 Denda Kerusakan/Kehilangan Buku
               </MDTypography>
-              <MDTypography variant="body2">Rp. 2.000</MDTypography>
+              <MDTypography variant="body2">Rp. {lostDamageFee}</MDTypography>
             </MDBox>
             <MDBox mb={1}>
               <MDTypography variant="body2" fontWeight="bold">
                 Total Denda
               </MDTypography>
-              <MDTypography variant="body2">Rp. 4.000</MDTypography>
+              <MDTypography variant="body2">Rp. {totalFee}</MDTypography>
             </MDBox>
           </Grid>
         </Grid>

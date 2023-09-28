@@ -21,6 +21,7 @@ function Return() {
       })
       .then((response) => {
         const borrowedBooks = response.data.map((borrowing) => {
+          borrowing["book"]["borrowTime"] = borrowing["createTime"];
           return borrowing["book"];
         });
         setBorrowedBooks(borrowedBooks);
