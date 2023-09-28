@@ -20,12 +20,15 @@ import style from "./style.module.css";
 function ReturnBookCard(props) {
   ReturnBookCard.propTypes = {
     book: PropTypes.object,
+    bookUpdated: PropTypes.func,
+    // checked: PropTypes.func,
   };
   const [lateDays, setLateDays] = useState();
   const [lateFee, setLatefee] = useState();
   const [lostDamageFee, setLostDamageFee] = useState();
   const [totalFee, setTotalFee] = useState();
   const [bookCondition, setBookCondition] = useState("Baik");
+  const [checked, setChecked] = useState(false);
 
   const calculateLateDays = () => {
     let difference = dateDifference(
@@ -58,7 +61,16 @@ function ReturnBookCard(props) {
     setLateDays(lateDays);
     setLatefee(lateFee);
     setTotalFee(lateFee + lostDamageFee);
+    props.book.totalFee = lateFee + lostDamageFee;
   }, [bookCondition]);
+
+  useEffect(() => {
+    props.book.checked = checked;
+  }, [checked]);
+
+  useEffect(() => {
+    props.bookUpdated(props.book);
+  });
 
   return (
     <Card style={{ marginBottom: "20px", padding: "10px 5px" }}>
@@ -157,10 +169,9 @@ function ReturnBookCard(props) {
         </Grid>
         <Grid className={style.checkBoxGrid} item>
           <input
+            onChange={(e) => setChecked(e.target.checked)}
             style={{ minWidth: "30px", minHeight: "30px" }}
             type="checkbox"
-            label="Text"
-            value="John Smith"
           />
         </Grid>
       </Grid>

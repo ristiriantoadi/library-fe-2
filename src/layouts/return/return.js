@@ -13,6 +13,7 @@ function Return() {
   const [members, setMembers] = useState([]);
   const [member, setMember] = useState();
   const [borrowedBooks, setBorrowedBooks] = useState([]);
+  const [totalFee, setTotalFee] = useState(0);
 
   const fetchBorrowedBooks = (member) => {
     privateAxios
@@ -63,6 +64,28 @@ function Return() {
     else {
       fetchBorrowedBooks(member);
     }
+  };
+
+  const calculateTotalFee = (books) => {
+    let totalFee = 0;
+    books.forEach((book) => {
+      if (book.checked === true) {
+        totalFee += book.totalFee;
+      }
+    });
+    setTotalFee(totalFee);
+  };
+
+  const bookUpdated = (book) => {
+    let borrowedBooksCopy = [...borrowedBooks];
+    borrowedBooksCopy = borrowedBooksCopy.map((bookCopy) => {
+      if (bookCopy["_id"] === book["_id"]) {
+        book = bookCopy;
+      }
+      return book;
+    });
+    console.log("borrow books copy", borrowedBooksCopy);
+    calculateTotalFee(borrowedBooksCopy);
   };
 
   return (
@@ -155,7 +178,13 @@ function Return() {
                     Buku
                   </MDTypography>
                   {borrowedBooks.map((book, index) => {
-                    return <ReturnBookCard key={index} book={book}></ReturnBookCard>;
+                    return (
+                      <ReturnBookCard
+                        bookUpdated={bookUpdated}
+                        key={index}
+                        book={book}
+                      ></ReturnBookCard>
+                    );
                   })}
                 </MDBox>
               )}
@@ -165,7 +194,7 @@ function Return() {
                 >
                   <MDBox>
                     <MDTypography variant="h4">Total Denda</MDTypography>
-                    <MDTypography variant="body">Rp. 34.000</MDTypography>
+                    <MDTypography variant="body">Rp. {totalFee}</MDTypography>
                   </MDBox>
                   <MDButton style={{ height: "40px" }} type="submit" color="info">
                     Konfirmasi
