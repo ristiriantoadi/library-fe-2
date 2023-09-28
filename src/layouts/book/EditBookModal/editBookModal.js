@@ -15,6 +15,7 @@ import Loader from "components/Util/Loader/loader";
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import { validateISBN } from "util/util";
 import { privateAxios } from "UtilRequests/util-axios";
 
 function EditBookModal(props) {
@@ -35,6 +36,7 @@ function EditBookModal(props) {
   const [stock, setStock] = useState();
   const [preview, setPreview] = useState();
   const [loading, setLoading] = useState(false);
+  const [invalidISBN, setInvalidISBN] = useState();
 
   const VisuallyHiddenInput = styled("input")({
     clip: "rect(0 0 0 0)",
@@ -128,6 +130,19 @@ function EditBookModal(props) {
     // free memory when ever this component is unmounted
     return () => URL.revokeObjectURL(objectUrl);
   }, [cover]);
+
+  useEffect(() => {
+    if (isbn == "" || isbn == undefined) {
+      setInvalidISBN(false);
+      return;
+    }
+
+    if (validateISBN(isbn) == false) {
+      setInvalidISBN(true);
+    } else {
+      setInvalidISBN(false);
+    }
+  }, [isbn]);
 
   return (
     <Modal
@@ -246,9 +261,18 @@ function EditBookModal(props) {
               </Grid>
               <Grid item xs={12} md={6}>
                 <MDBox mb={3}>
-                  <MDTypography mb={1} variant="body2" fontWeight="bold">
-                    ISBN
-                  </MDTypography>
+                  <div style={{ display: "flex" }}>
+                    <MDTypography mb={1} mr={1} variant="body2" fontWeight="bold">
+                      ISBN
+                    </MDTypography>
+                    <MDTypography
+                      mb={1}
+                      style={{ display: "flex", alignItems: "center", color: "red" }}
+                      variant="caption"
+                    >
+                      {invalidISBN && "(Nomor tidak valid)"}
+                    </MDTypography>
+                  </div>
                   <MDInput
                     type="text"
                     value={isbn}
