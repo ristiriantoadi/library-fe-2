@@ -41,11 +41,11 @@ import Configuration from "layouts/configuration";
 import Dashboard from "layouts/dashboard";
 import Logout from "layouts/logout";
 import Member from "layouts/member";
-import Profile from "layouts/profile";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
 import Borrow from "layouts/borrow/borrow";
+import Return from "layouts/return/return";
 
 const routes = [
   {
@@ -85,8 +85,8 @@ const routes = [
     name: "Pengembalian",
     key: "checkin",
     icon: <Icon fontSize="small">assignmentTurnedIn</Icon>,
-    route: "/profile",
-    component: <Profile />,
+    route: "/pengembalian",
+    component: <Return />,
   },
   {
     type: "collapse",

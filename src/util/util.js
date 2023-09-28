@@ -1,3 +1,5 @@
+import { privateAxios } from "UtilRequests/util-axios";
+
 const ONE_DAY_IN_MILLISECONDS = 24 * 60 * 60 * 1000;
 export const addDate = (date, days) => {
   return new Date(date.getTime() + ONE_DAY_IN_MILLISECONDS * days);
@@ -27,4 +29,14 @@ export const validateISBN = (isbn) => {
   const isbn13Pattern = /^(?:\d{13})$/;
 
   return isbn10Pattern.test(isbn) || isbn13Pattern.test(isbn);
+};
+
+export const fetchMember = async () => {
+  try {
+    response = await privateAxios.get("/admin/member");
+    console.log("response", response);
+    return response.data.content;
+  } catch (error) {
+    return [];
+  }
 };
