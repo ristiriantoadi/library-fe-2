@@ -72,6 +72,7 @@ function Return() {
   const calculateTotalFee = (books) => {
     let totalFee = 0;
     books.forEach((book) => {
+      console.log("book", book);
       if (book.checked === true) {
         totalFee += book.totalFee;
       }
@@ -82,13 +83,13 @@ function Return() {
   const bookUpdated = (book) => {
     let borrowedBooksCopy = [...borrowedBooks];
     borrowedBooksCopy = borrowedBooksCopy.map((bookCopy) => {
-      if (bookCopy["_id"] === book["_id"]) {
-        book = bookCopy;
+      if (bookCopy["borrowId"] === book["borrowId"]) {
+        bookCopy = book;
       }
-      return book;
+      return bookCopy;
     });
     calculateTotalFee(borrowedBooksCopy);
-    setBorrowedBooks(borrowedBooksCopy);
+    // setBorrowedBooks(borrowedBooksCopy);
   };
 
   useEffect(() => {
