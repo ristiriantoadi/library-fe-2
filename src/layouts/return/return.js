@@ -14,6 +14,7 @@ function Return() {
   const [member, setMember] = useState();
   const [borrowedBooks, setBorrowedBooks] = useState([]);
   const [totalFee, setTotalFee] = useState(0);
+  const [disabled, setDisabled] = useState(true);
 
   const fetchBorrowedBooks = (member) => {
     privateAxios
@@ -23,6 +24,8 @@ function Return() {
       .then((response) => {
         const borrowedBooks = response.data.map((borrowing) => {
           borrowing["book"]["borrowTime"] = borrowing["createTime"];
+          borrowing["book"]["borrowId"] = borrowing["_id"];
+          borrowing["book"]["userId"] = borrowing["userId"];
           return borrowing["book"];
         });
         setBorrowedBooks(borrowedBooks);
@@ -84,9 +87,19 @@ function Return() {
       }
       return book;
     });
-    console.log("borrow books copy", borrowedBooksCopy);
     calculateTotalFee(borrowedBooksCopy);
+    setBorrowedBooks(borrowedBooksCopy);
   };
+
+  useEffect(() => {
+    let disabled = true;
+    borrowedBooks.forEach((book) => {
+      if (book.checked === true) {
+        disabled = false;
+      }
+    });
+    setDisabled(disabled);
+  }, [borrowedBooks]);
 
   return (
     <MDBox pt={6} pb={3}>
@@ -196,7 +209,12 @@ function Return() {
                     <MDTypography variant="h4">Total Denda</MDTypography>
                     <MDTypography variant="body">Rp. {totalFee}</MDTypography>
                   </MDBox>
-                  <MDButton style={{ height: "40px" }} type="submit" color="info">
+                  <MDButton
+                    disabled={disabled}
+                    style={{ height: "40px" }}
+                    type="submit"
+                    color="info"
+                  >
                     Konfirmasi
                   </MDButton>
                 </div>
