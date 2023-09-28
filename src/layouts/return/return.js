@@ -6,11 +6,28 @@ import MDTypography from "components/MDTypography";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { privateAxios } from "UtilRequests/util-axios";
+import ReturnBookCard from "./ReturnBookCard";
 
 function Return() {
   const [name, setName] = useState();
   const [members, setMembers] = useState([]);
   const [member, setMember] = useState();
+  const [borrowedBooks, setBorrowedBooks] = useState([]);
+
+  const fetchBorrowedBooks = (member) => {
+    privateAxios
+      .get("/admin/borrowing", {
+        params: { memberId: member["_id"], status: "Sedang Dipinjam" },
+      })
+      .then((response) => {
+        const borrowedBooks = response.data.map((borrowing) => {
+          return borrowing["book"];
+        });
+        setBorrowedBooks(borrowedBooks);
+        console.log("borrowed books", borrowedBooks);
+      })
+      .catch((error) => {});
+  };
 
   useEffect(() => {
     privateAxios
@@ -43,6 +60,9 @@ function Return() {
         progress: undefined,
         theme: "colored",
       });
+    else {
+      fetchBorrowedBooks(member);
+    }
   };
 
   return (
@@ -129,6 +149,14 @@ function Return() {
                   )}
                 </MDBox>
               </MDBox>
+              {member && (
+                <MDBox>
+                  <MDTypography variant="h5" mb={2}>
+                    Buku
+                  </MDTypography>
+                  <ReturnBookCard></ReturnBookCard>
+                </MDBox>
+              )}
             </form>
           </Card>
         </Grid>
