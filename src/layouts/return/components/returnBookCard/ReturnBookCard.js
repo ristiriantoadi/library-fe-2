@@ -8,7 +8,7 @@ import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
-import { addDate, dateDifference, getDate } from "util/util";
+import { addDate, dateDifference, formatCurrency, getDate } from "util/util";
 import {
   BORROW_DURATION,
   DAMAGE_BOOK_FEE,
@@ -72,7 +72,7 @@ function ReturnBookCard(props) {
   }, [checked]);
 
   useEffect(() => {
-    props.bookUpdated(props.book);
+    props.bookUpdated();
   });
 
   return (
@@ -154,13 +154,13 @@ function ReturnBookCard(props) {
               <MDTypography variant="body2" fontWeight="bold">
                 Denda
               </MDTypography>
-              <MDTypography variant="body2">Rp. {lateFee}</MDTypography>
+              <MDTypography variant="body2">{formatCurrency(lateFee)}</MDTypography>
             </MDBox>
             <MDBox mb={1}>
               <MDTypography variant="body2" fontWeight="bold">
                 Denda Kerusakan/Kehilangan Buku
               </MDTypography>
-              <MDTypography variant="body2">Rp. {lostDamageFee}</MDTypography>
+              <MDTypography variant="body2">{formatCurrency(lostDamageFee)}</MDTypography>
             </MDBox>
             <MDBox mb={1}>
               <MDTypography variant="body2" fontWeight="bold">

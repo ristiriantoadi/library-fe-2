@@ -55,3 +55,11 @@ export const fetchMember = async () => {
     return [];
   }
 };
+
+export const formatCurrency = (number) => {
+  return number.toLocaleString("id-ID", {
+    style: "currency",
+    currency: "IDR",
+    minimumFractionDigits: 0, // Remove decimal places for whole numbers
+  });
+};

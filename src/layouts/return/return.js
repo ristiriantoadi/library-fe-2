@@ -5,6 +5,7 @@ import MDButton from "components/MDButton";
 import MDTypography from "components/MDTypography";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import { formatCurrency } from "util/util";
 import { privateAxios } from "UtilRequests/util-axios";
 import ReturnBookCard from "./components/returnBookCard/ReturnBookCard";
 
@@ -80,13 +81,10 @@ function Return() {
     setTotalFee(totalFee);
   };
 
-  const bookUpdated = (book) => {
+  const bookUpdated = () => {
     let borrowedBooksCopy = [...borrowedBooks];
     setDisabled(true);
     borrowedBooksCopy = borrowedBooksCopy.map((bookCopy) => {
-      if (bookCopy["borrowId"] === book["borrowId"]) {
-        bookCopy = book;
-      }
       if (bookCopy.checked == true) setDisabled(false);
       return bookCopy;
     });
@@ -243,7 +241,7 @@ function Return() {
                 >
                   <MDBox>
                     <MDTypography variant="h4">Total Denda</MDTypography>
-                    <MDTypography variant="body">Rp. {totalFee}</MDTypography>
+                    <MDTypography variant="body">{formatCurrency(totalFee)}</MDTypography>
                   </MDBox>
                   <MDButton
                     disabled={disabled}
