@@ -51,9 +51,15 @@ function Return() {
       .catch((error) => {});
   }, []);
 
+  const reset = () => {
+    setDisabled(true);
+    setBorrowedBooks([]);
+  };
+
   const findMember = () => {
     let found = false;
     let member;
+    reset();
     members.forEach((m) => {
       if (`${m.name} (${m.noId})` === name) {
         setMember(m);
