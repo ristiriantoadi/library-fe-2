@@ -22,7 +22,6 @@ function BorrowingHistoryPanel(props) {
     privateAxios
       .get("/admin/borrowing", { params: { memberId: props.member["_id"] } })
       .then((response) => {
-        console.log("response", response.data);
         let rows = response.data.map((borrow) => {
           return {
             title: borrow["book"]["title"],

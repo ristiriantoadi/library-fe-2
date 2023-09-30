@@ -54,75 +54,77 @@ function InfoBookModal(props) {
             Info Buku
           </MDTypography>
         </MDBox>
-        <Grid container>
-          <Grid
-            style={{ display: "flex", justifyContent: "space-between" }}
-            item
-            xs={12}
-            mx={3}
-            lg={5}
-          >
-            <div>
-              <MDBox mb={3}>
-                <MDTypography variant="body2" fontWeight="bold">
-                  Judul
-                </MDTypography>
-                <MDTypography variant="body2">{props.book.title}</MDTypography>
-              </MDBox>
-              <MDBox mb={3}>
-                <MDTypography variant="body2" fontWeight="bold">
-                  Penulis
-                </MDTypography>
-                {displayAuthors()}
-              </MDBox>
-              <MDBox mb={3}>
-                <MDTypography variant="body2" fontWeight="bold">
-                  Penerbit
-                </MDTypography>
-                <MDTypography variant="body2">{props.book.publisher}</MDTypography>
-              </MDBox>
-              <MDBox mb={3}>
-                <MDTypography variant="body2" fontWeight="bold">
-                  Stok
-                </MDTypography>
-                <MDTypography variant="body2">{props.book.stock}</MDTypography>
-              </MDBox>
-            </div>
-            <div>
-              <MDBox mb={3}>
-                <MDTypography variant="body2" fontWeight="bold">
-                  ISBN
-                </MDTypography>
-                <MDTypography variant="body2">{props.book.isbn}</MDTypography>
-              </MDBox>
-              <MDBox mb={3}>
-                <MDTypography variant="body2" fontWeight="bold">
-                  Tahun Terbit
-                </MDTypography>
-                <MDTypography variant="body2">{props.book.publicationYear}</MDTypography>
-              </MDBox>
-              <MDBox mb={3}>
-                <MDTypography variant="body2" fontWeight="bold">
-                  Kategori
-                </MDTypography>
-                <MDTypography variant="body2">{props.book.category}</MDTypography>
-              </MDBox>
-            </div>
+        <MDBox style={{ overflow: "scroll", maxHeight: "80vh" }}>
+          <Grid container>
+            <Grid
+              style={{ display: "flex", justifyContent: "space-between" }}
+              item
+              xs={12}
+              mx={3}
+              lg={5}
+            >
+              <div>
+                <MDBox mb={3}>
+                  <MDTypography variant="body2" fontWeight="bold">
+                    Judul
+                  </MDTypography>
+                  <MDTypography variant="body2">{props.book.title}</MDTypography>
+                </MDBox>
+                <MDBox mb={3}>
+                  <MDTypography variant="body2" fontWeight="bold">
+                    Penulis
+                  </MDTypography>
+                  {displayAuthors()}
+                </MDBox>
+                <MDBox mb={3}>
+                  <MDTypography variant="body2" fontWeight="bold">
+                    Penerbit
+                  </MDTypography>
+                  <MDTypography variant="body2">{props.book.publisher}</MDTypography>
+                </MDBox>
+                <MDBox mb={3}>
+                  <MDTypography variant="body2" fontWeight="bold">
+                    Stok
+                  </MDTypography>
+                  <MDTypography variant="body2">{props.book.stock}</MDTypography>
+                </MDBox>
+              </div>
+              <div>
+                <MDBox mb={3}>
+                  <MDTypography variant="body2" fontWeight="bold">
+                    ISBN
+                  </MDTypography>
+                  <MDTypography variant="body2">{props.book.isbn}</MDTypography>
+                </MDBox>
+                <MDBox mb={3}>
+                  <MDTypography variant="body2" fontWeight="bold">
+                    Tahun Terbit
+                  </MDTypography>
+                  <MDTypography variant="body2">{props.book.publicationYear}</MDTypography>
+                </MDBox>
+                <MDBox mb={3}>
+                  <MDTypography variant="body2" fontWeight="bold">
+                    Kategori
+                  </MDTypography>
+                  <MDTypography variant="body2">{props.book.category}</MDTypography>
+                </MDBox>
+              </div>
+            </Grid>
+            <Grid
+              style={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+              item
+              xs={12}
+              lg={5}
+              mb={2}
+            >
+              <MDTypography variant="body2" fontWeight="bold">
+                Cover
+              </MDTypography>
+              <img src={props.book.cover} style={{ width: "300px" }} />
+            </Grid>
           </Grid>
-          <Grid
-            style={{ display: "flex", flexDirection: "column", alignItems: "center" }}
-            item
-            xs={12}
-            lg={5}
-            mb={2}
-          >
-            <MDTypography variant="body2" fontWeight="bold">
-              Cover
-            </MDTypography>
-            <img src={props.book.cover} style={{ width: "300px" }} />
-          </Grid>
-        </Grid>
-        <BasicTabs></BasicTabs>
+          <BasicTabs book={props.book}></BasicTabs>
+        </MDBox>
       </MDBox>
     </Modal>
   );

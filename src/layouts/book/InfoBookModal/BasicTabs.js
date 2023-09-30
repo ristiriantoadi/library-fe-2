@@ -40,7 +40,10 @@ function a11yProps(index) {
   };
 }
 
-export default function BasicTabs() {
+export default function BasicTabs(props) {
+  BasicTabs.propTypes = {
+    book: PropTypes.object,
+  };
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
@@ -55,7 +58,7 @@ export default function BasicTabs() {
         </Tabs>
       </MDBox>
       <CustomTabPanel value={value} index={0}>
-        <BorrowingHistoryPanel />
+        <BorrowingHistoryPanel book={props.book} />
       </CustomTabPanel>
     </Box>
   );
