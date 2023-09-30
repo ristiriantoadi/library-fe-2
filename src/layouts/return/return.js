@@ -3,6 +3,7 @@ import Grid from "@mui/material/Grid";
 import MDBox from "components/MDBox";
 import MDButton from "components/MDButton";
 import MDTypography from "components/MDTypography";
+import Loader from "components/Util/Loader/loader";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { formatCurrency } from "util/util";
@@ -16,6 +17,7 @@ function Return() {
   const [borrowedBooks, setBorrowedBooks] = useState([]);
   const [totalFee, setTotalFee] = useState(0);
   const [disabled, setDisabled] = useState(true);
+  const [loadingConfirm, setLoadingConfirm] = useState(false);
 
   const fetchBorrowedBooks = (member) => {
     privateAxios
@@ -93,6 +95,7 @@ function Return() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setLoadingConfirm(true);
     let data = [];
     borrowedBooks.forEach((book) => {
       if (book.checked === true) {
@@ -131,8 +134,11 @@ function Return() {
         setMember(undefined);
         setBorrowedBooks([]);
         setTotalFee(0);
+        setLoadingConfirm(false);
       })
-      .catch((error) => {});
+      .catch((error) => {
+        setLoadingConfirm(false);
+      });
   };
 
   return (
@@ -249,7 +255,7 @@ function Return() {
                     type="submit"
                     color="info"
                   >
-                    Konfirmasi
+                    {loadingConfirm == true ? <Loader /> : "Konfirmasi"}
                   </MDButton>
                 </div>
               )}

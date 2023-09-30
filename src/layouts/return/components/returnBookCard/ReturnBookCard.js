@@ -24,8 +24,8 @@ function ReturnBookCard(props) {
     // checked: PropTypes.func,
   };
   const [lateDays, setLateDays] = useState();
-  const [lateFee, setLatefee] = useState();
-  const [lostDamageFee, setLostDamageFee] = useState();
+  const [lateFee, setLatefee] = useState(0);
+  const [lostDamageFee, setLostDamageFee] = useState(0);
   const [totalFee, setTotalFee] = useState();
   const [bookCondition, setBookCondition] = useState("Baik");
   const [checked, setChecked] = useState(false);
