@@ -18,8 +18,10 @@ function Return() {
   const [totalFee, setTotalFee] = useState(0);
   const [disabled, setDisabled] = useState(true);
   const [loadingConfirm, setLoadingConfirm] = useState(false);
+  const [loadingFetchBook, setLoadingFetchBook] = useState(false);
 
   const fetchBorrowedBooks = (member) => {
+    setLoadingFetchBook(true);
     privateAxios
       .get("/admin/borrowing", {
         params: { memberId: member["_id"], status: "Sedang Dipinjam" },
@@ -33,8 +35,11 @@ function Return() {
           return borrowing["book"];
         });
         setBorrowedBooks(borrowedBooks);
+        setLoadingFetchBook(false);
       })
-      .catch((error) => {});
+      .catch((error) => {
+        setLoadingFetchBook(false);
+      });
   };
 
   useEffect(() => {
@@ -186,7 +191,7 @@ function Return() {
                       color="info"
                       onClick={findMember}
                     >
-                      Cari Anggota
+                      {loadingFetchBook == true ? <Loader /> : "Cari Anggota"}
                     </MDButton>
                   </div>
                 </MDBox>
