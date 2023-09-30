@@ -19,7 +19,6 @@ function BorrowingHistoryPanel(props) {
   const [rows, setRows] = useState([]);
 
   useEffect(() => {
-    console.log("Fetch data");
     privateAxios
       .get("/admin/borrowing", { params: { bookId: props.book["_id"] } })
       .then((response) => {
