@@ -12,6 +12,11 @@ function InfoModal(props) {
     member: PropTypes.object,
   };
 
+  function mapGender(gender) {
+    if (gender == "MALE") return "Laki-laki";
+    else return "Perempuan";
+  }
+
   return (
     <Modal
       open={props.open}
@@ -81,7 +86,7 @@ function InfoModal(props) {
                 <MDTypography variant="body2" fontWeight="bold">
                   Jenis Kelamin
                 </MDTypography>
-                <MDTypography variant="body2">{props.member.gender}</MDTypography>
+                <MDTypography variant="body2">{mapGender(props.member.gender)}</MDTypography>
               </MDBox>
               <MDBox>
                 <MDTypography variant="body2" fontWeight="bold">
