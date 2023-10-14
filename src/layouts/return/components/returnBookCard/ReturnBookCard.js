@@ -79,7 +79,10 @@ function ReturnBookCard(props) {
     <Card style={{ marginBottom: "20px", padding: "10px 5px" }}>
       <Grid container spacing={1}>
         <Grid xs={10} item p={1} mx={1} spacing={3} container>
-          <Grid item xs={6}>
+          <Grid item xs={2}>
+            <img height={150} src={props.book.cover}></img>
+          </Grid>
+          <Grid item xs={4}>
             <MDBox mb={1}>
               <MDTypography variant="body2" fontWeight="bold">
                 Judul

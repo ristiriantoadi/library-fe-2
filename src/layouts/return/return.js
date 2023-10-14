@@ -32,6 +32,7 @@ function Return() {
           borrowing["book"]["borrowId"] = borrowing["_id"];
           borrowing["book"]["userId"] = borrowing["userId"];
           borrowing["book"]["bookId"] = borrowing["book"]["_id"];
+          borrowing["book"]["cover"] = borrowing["book"]["cover"];
           return borrowing["book"];
         });
         setBorrowedBooks(borrowedBooks);
