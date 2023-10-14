@@ -64,7 +64,7 @@ export default function BasicTabs(props) {
         <BorrowingHistoryPanel member={props.member} />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
-        <FineHistoryPanel />
+        <FineHistoryPanel member={props.member} />
       </CustomTabPanel>
     </Box>
   );
