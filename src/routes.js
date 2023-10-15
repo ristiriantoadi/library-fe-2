@@ -37,7 +37,6 @@ Coded by www.creative-tim.com
 
 // Material Dashboard 2 React layouts
 import Book from "layouts/book";
-import Configuration from "layouts/configuration";
 import Dashboard from "layouts/dashboard";
 import Logout from "layouts/logout";
 import Member from "layouts/member";
@@ -87,14 +86,6 @@ const routes = [
     icon: <Icon fontSize="small">assignmentTurnedIn</Icon>,
     route: "/pengembalian",
     component: <Return />,
-  },
-  {
-    type: "collapse",
-    name: "Konfigurasi",
-    key: "configuration",
-    icon: <Icon fontSize="small">assignmentTurnedIn</Icon>,
-    route: "/configuration",
-    component: <Configuration />,
   },
   {
     type: "collapse",
