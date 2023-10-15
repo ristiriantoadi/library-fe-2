@@ -17,6 +17,7 @@ import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { validateISBN } from "util/util";
 import { privateAxios } from "UtilRequests/util-axios";
+import style from "../BookModal.module.css";
 
 function EditBookModal(props) {
   EditBookModal.propTypes = {
@@ -220,7 +221,10 @@ function EditBookModal(props) {
                             paddingLeft: "10px",
                           }}
                         >
-                          <DeleteIcon style={{ width: "25px", height: "25px" }}></DeleteIcon>
+                          <DeleteIcon
+                            className={style.deleteAuthor}
+                            style={{ width: "25px", height: "25px" }}
+                          ></DeleteIcon>
                         </button>
                       )}
                     </div>
