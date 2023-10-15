@@ -254,7 +254,11 @@ function AddBookModal(props) {
                       )}
                     </div>
                   ))}
-                  <MDButton onClick={addAuthor} style={{ marginTop: "5px", paddingLeft: "0px" }}>
+                  <MDButton
+                    className={style.addAuthor}
+                    onClick={addAuthor}
+                    style={{ marginTop: "5px", paddingLeft: "0px" }}
+                  >
                     Tambah Penulis
                   </MDButton>
                 </MDBox>
